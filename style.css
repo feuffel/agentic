@@ -16,17 +16,23 @@
   font-family: 'Fira Code', monospace;
 }
 
-/* Title slide layout and text */
-.vanta-slide {
-  display: flex !important;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
+/* Force slide content above background iframes */
+.reveal > .backgrounds {
+  z-index: 1;
 }
 
-.vanta-slide h1,
-.vanta-slide h3 {
+.reveal > .slides {
+  z-index: 2;
+}
+
+/* Kill the global iframe z-index for background iframes */
+.reveal .slide-background iframe {
+  z-index: 0 !important;
+}
+
+/* Title slide (has background iframe) — white text */
+.reveal section[data-background-iframe] h1,
+.reveal section[data-background-iframe] h3 {
   color: #FFFFFF !important;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
