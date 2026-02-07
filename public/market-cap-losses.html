@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Market Cap Losses — Software Companies</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAFAF8;
+    --bar: #FF6B40;
+    --bar-glow: rgba(255, 107, 64, 0.15);
+    --text-primary: #1A1A1A;
+    --text-secondary: #6B6B6B;
+    --text-value: #D94420;
+    --ticker: #999;
+    --source: #888;
+    --link: #3366AA;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+  }
+
+  .chart-container {
+    width: 100%;
+    max-width: 960px;
+    position: relative;
+  }
+
+  .chart-title {
+    font-size: clamp(1.6rem, 3.2vw, 2.4rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin-bottom: 0.3rem;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: fadeUp 0.6s ease-out forwards;
+  }
+
+  .chart-subtitle {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin-bottom: 2.4rem;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeUp 0.5s ease-out 0.15s forwards;
+  }
+
+  .rows { display: flex; flex-direction: column; gap: 1rem; }
+
+  .row {
+    display: grid;
+    grid-template-columns: 100px 1fr 160px;
+    align-items: center;
+    gap: 0;
+    height: 44px;
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  .value {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: var(--text-value);
+    text-align: right;
+    padding-right: 12px;
+    white-space: nowrap;
+    opacity: 0;
+  }
+
+  .bar-track {
+    height: 34px;
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .bar {
+    height: 100%;
+    background: var(--bar);
+    border-radius: 2px;
+    width: 0;
+    position: relative;
+    box-shadow: 0 2px 12px var(--bar-glow);
+    transition: box-shadow 0.3s ease;
+  }
+
+  .bar:hover {
+    box-shadow: 0 4px 24px rgba(255, 107, 64, 0.35);
+  }
+
+  .bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.18) 0%, transparent 100%);
+    border-radius: 2px 2px 0 0;
+  }
+
+  .label {
+    padding-left: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .company-name {
+    font-weight: 700;
+    font-size: 0.95rem;
+    line-height: 1.2;
+    color: var(--text-primary);
+  }
+
+  .ticker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--ticker);
+    letter-spacing: 0.04em;
+  }
+
+  .source {
+    margin-top: 2.2rem;
+    font-size: 0.78rem;
+    color: var(--source);
+    opacity: 0;
+    animation: fadeUp 0.4s ease-out 2.6s forwards;
+  }
+
+  .source a { color: var(--link); text-decoration: underline; }
+
+  /* total line */
+  .total-callout {
+    margin-top: 1.6rem;
+    padding: 0.9rem 1.2rem;
+    background: linear-gradient(135deg, rgba(255,107,64,0.06) 0%, rgba(255,107,64,0.02) 100%);
+    border-left: 3px solid var(--bar);
+    border-radius: 0 6px 6px 0;
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    opacity: 0;
+    transform: translateY(6px);
+    animation: fadeUp 0.5s ease-out 2.4s forwards;
+  }
+
+  .total-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+
+  .total-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: var(--text-value);
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes growBar {
+    from { width: 0; }
+  }
+
+  @keyframes popValue {
+    0% { opacity: 0; transform: scale(0.8); }
+    60% { transform: scale(1.05); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+</style>
+</head>
+<body>
+
+<div class="chart-container">
+  <h1 class="chart-title">Market cap losses for select software companies</h1>
+  <p class="chart-subtitle">Jan. 30 through Feb. 6, 2026</p>
+
+  <div class="rows" id="rows"></div>
+
+  <div class="total-callout">
+    <span class="total-label">Combined loss</span>
+    <span class="total-value">–$425.6b</span>
+  </div>
+
+  <p class="source">Data: <a href="#">Financial Modeling Prep</a>; Chart: Axios Visuals</p>
+</div>
+
+<script>
+const data = [
+  { company: "Microsoft",           ticker: "MSFT", value: 218.8 },
+  { company: "Oracle",              ticker: "ORCL", value: 61.0  },
+  { company: "Palantir Technologies", ticker: "PLTR", value: 36.1 },
+  { company: "AppLovin",            ticker: "APP",  value: 22.6  },
+  { company: "Salesforce",          ticker: "CRM",  value: 21.9  },
+  { company: "ServiceNow",          ticker: "NOW",  value: 16.2  },
+  { company: "Intuit",              ticker: "INTU", value: 15.7  },
+  { company: "CrowdStrike",         ticker: "CRWD", value: 11.2  },
+  { company: "Palo Alto Networks",  ticker: "PANW", value: 11.2  },
+  { company: "Adobe",               ticker: "ADBE", value: 9.9   },
+];
+
+const maxValue = data[0].value;
+const container = document.getElementById("rows");
+
+data.forEach((d, i) => {
+  const pct = (d.value / maxValue) * 100;
+  const rowDelay = 0.3 + i * 0.12;
+  const barDelay = rowDelay + 0.15;
+  const valDelay = barDelay + 0.25;
+
+  const row = document.createElement("div");
+  row.className = "row";
+  row.style.animation = `fadeUp 0.4s ease-out ${rowDelay}s forwards`;
+
+  row.innerHTML = `
+    <div class="value" style="animation: popValue 0.4s ease-out ${valDelay}s forwards;">
+      –$${d.value.toFixed(1)}b
+    </div>
+    <div class="bar-track">
+      <div class="bar" style="animation: growBar 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) ${barDelay}s forwards; width: 0;" data-width="${pct}%"></div>
+    </div>
+    <div class="label">
+      <span class="company-name">${d.company}</span>
+      <span class="ticker">${d.ticker}</span>
+    </div>
+  `;
+
+  container.appendChild(row);
+});
+
+// Set final widths after animation
+document.querySelectorAll('.bar').forEach(bar => {
+  const targetWidth = bar.dataset.width;
+  bar.style.setProperty('--target', targetWidth);
+  bar.addEventListener('animationend', () => {
+    bar.style.width = targetWidth;
+  });
+});
+
+// Override the growBar animation to use data-driven width
+const style = document.createElement('style');
+data.forEach((d, i) => {
+  const pct = (d.value / maxValue) * 100;
+  style.textContent += `
+    .rows .row:nth-child(${i + 1}) .bar {
+      animation-name: growBar${i};
+    }
+    @keyframes growBar${i} {
+      from { width: 0; }
+      to { width: ${pct}%; }
+    }
+  `;
+});
+document.head.appendChild(style);
+</script>
+
+</body>
+</html>

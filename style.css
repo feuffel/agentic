@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+
+.reveal {
+  font-family: 'Space Grotesk', sans-serif;
+  background: #F6F0EB;
+  color: #000000;
+}
+
+.reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+  font-family: 'Space Grotesk', sans-serif;
+  text-transform: none;
+  color: #000000;
+}
+
+.reveal code, .reveal pre code {
+  font-family: 'Fira Code', monospace;
+}
