@@ -1,4 +1,5 @@
 
+<!-- .slide: data-background="#000000" id="title-slide" -->
 
 # Agentic AI
 
@@ -239,7 +240,7 @@ Coding agents are the most mature agentic application today. They can write, tes
 
 <!-- .slide: data-background="#FAFAF8" -->
 
-<iframe data-src="market-cap-losses.html" width="960" height="600" frameborder="0" style="border:none; max-width:90vw;"></iframe>
+<iframe data-src="market-cap-losses.html" width="960" height="700" frameborder="0" style="border:none; max-width:95vw; max-height:90vh;"></iframe>
 
 Note:
 The DeepSeek R1 release triggered significant market cap losses across major software companies in late January 2026 — a sign of how seriously the market takes agentic AI disruption.
