@@ -7,6 +7,7 @@
   color: #000000;
   font-weight: 400;
   line-height: 1.5;
+  letter-spacing: -0.02em;
 }
 
 /* ===== Left-align all slide content (override Reveal.js centering) ===== */
@@ -24,21 +25,39 @@
   text-transform: none;
   color: #000000;
   text-align: left;
+  letter-spacing: -0.04em;
 }
 
 .reveal h1 {
   font-weight: 700;
-  font-size: 2.2em;
+  font-size: 2.6em;
+  line-height: 0.95;
+  margin-bottom: 0.4em;
 }
 
 .reveal h2 {
   font-weight: 700;
-  font-size: 1.6em;
+  font-size: 1.8em;
+  line-height: 0.95;
+  margin-bottom: 0.3em;
 }
 
 .reveal h3 {
   font-weight: 600;
   font-size: 1.2em;
+  margin-bottom: 0.5em;
+}
+
+/* Act/Section labels — small caps above headlines */
+.reveal h2 .act-label {
+  display: block;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.4em;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.5);
+  margin-bottom: 0.5em;
 }
 
 
@@ -394,6 +413,405 @@
 
 .reveal .slides section .agenda-columns ol li {
   margin-bottom: 0.3em;
+}
+
+/* ===== Numbered Cards (Figma "01 THING" pattern) ===== */
+.reveal .numbered-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5em;
+  margin-top: 1em;
+}
+
+.reveal .numbered-cards.two-col {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.reveal .numbered-card {
+  position: relative;
+}
+
+.reveal .numbered-card .card-number {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.9em;
+  font-weight: 300;
+  color: rgba(0, 0, 0, 0.35);
+  margin-bottom: 0.3em;
+}
+
+.reveal .numbered-card .card-title {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.6em;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.6em;
+}
+
+.reveal .numbered-card .card-body {
+  font-size: 0.7em;
+  font-weight: 300;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+/* Dark slide numbered cards */
+.reveal .slides section.dark-slide .numbered-card .card-number {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.reveal .slides section.dark-slide .numbered-card .card-title {
+  color: #FFFFFF;
+}
+
+.reveal .slides section.dark-slide .numbered-card .card-body {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* ===== Large Metric Display (Figma big number pattern) ===== */
+.reveal .metric-display {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.reveal .metric-display.centered {
+  align-items: center;
+  text-align: center;
+}
+
+.reveal .metric-value {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 5em;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin: 0.1em 0;
+}
+
+.reveal .metric-label {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.55em;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.5);
+  margin-bottom: 0.5em;
+}
+
+.reveal .metric-description {
+  font-size: 0.85em;
+  font-weight: 400;
+  max-width: 500px;
+  line-height: 1.5;
+}
+
+.reveal .metric-source {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.5em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.4);
+  margin-top: 1em;
+}
+
+/* Metric value as text (not number) — smaller size */
+.reveal .metric-value-text {
+  font-size: 2em;
+}
+
+/* Dark slide metrics */
+.reveal .slides section.dark-slide .metric-value {
+  color: #FFFFFF;
+}
+
+.reveal .slides section.dark-slide .metric-label,
+.reveal .slides section.dark-slide .metric-source {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.reveal .slides section.dark-slide .metric-description {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Dark slide stat row */
+.reveal .slides section.dark-slide .stat-item .stat-value {
+  color: #FFFFFF;
+}
+
+.reveal .slides section.dark-slide .stat-item .stat-label {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ===== Split Layout (half black, half cream) ===== */
+.reveal .slides section.split-slide {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 0;
+}
+
+.reveal .slides section.split-slide > .split-left,
+.reveal .slides section.split-slide > .split-right {
+  padding: 7%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.reveal .slides section.split-slide > .split-left {
+  background: #F6F0EB;
+}
+
+.reveal .slides section.split-slide > .split-right {
+  background: #000000;
+  color: #FFFFFF;
+}
+
+.reveal .slides section.split-slide > .split-right h1,
+.reveal .slides section.split-slide > .split-right h2,
+.reveal .slides section.split-slide > .split-right h3,
+.reveal .slides section.split-slide > .split-right h4,
+.reveal .slides section.split-slide > .split-right p,
+.reveal .slides section.split-slide > .split-right li {
+  color: #FFFFFF;
+}
+
+.reveal .slides section.split-slide > .split-right .metric-label,
+.reveal .slides section.split-slide > .split-right .metric-source {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Reverse split (black left, cream right) */
+.reveal .slides section.split-slide.split-reverse > .split-left {
+  background: #000000;
+  color: #FFFFFF;
+}
+
+.reveal .slides section.split-slide.split-reverse > .split-right {
+  background: #F6F0EB;
+  color: #000000;
+}
+
+.reveal .slides section.split-slide.split-reverse > .split-left h1,
+.reveal .slides section.split-slide.split-reverse > .split-left h2,
+.reveal .slides section.split-slide.split-reverse > .split-left h3,
+.reveal .slides section.split-slide.split-reverse > .split-left h4,
+.reveal .slides section.split-slide.split-reverse > .split-left p,
+.reveal .slides section.split-slide.split-reverse > .split-left li {
+  color: #FFFFFF;
+}
+
+/* ===== Horizontal Divider Lines ===== */
+.reveal hr {
+  border: none;
+  height: 1px;
+  background: #000000;
+  margin: 1.5em 0;
+  opacity: 0.15;
+}
+
+.reveal .slides section.dark-slide hr {
+  background: #FFFFFF;
+  opacity: 0.25;
+}
+
+/* ===== Stat Row (inline metrics) ===== */
+.reveal .stat-row {
+  display: flex;
+  gap: 3em;
+  margin: 1.5em 0;
+}
+
+.reveal .stat-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.reveal .stat-item .stat-value {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2.5em;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.reveal .stat-item .stat-label {
+  font-size: 0.65em;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.6);
+  margin-top: 0.3em;
+}
+
+.reveal .slides section.dark-slide .stat-item .stat-label {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ===== Timeline (Figma roadmap pattern) ===== */
+.reveal .timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 1em;
+  border-left: 2px solid rgba(0, 0, 0, 0.15);
+  padding-left: 1.5em;
+}
+
+.reveal .timeline-item {
+  position: relative;
+  padding-bottom: 1.2em;
+}
+
+.reveal .timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -1.65em;
+  top: 0.4em;
+  width: 8px;
+  height: 8px;
+  background: #000000;
+  border-radius: 50%;
+}
+
+.reveal .timeline-item .timeline-date {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.6em;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.5);
+  margin-bottom: 0.3em;
+}
+
+.reveal .timeline-item .timeline-title {
+  font-weight: 600;
+  font-size: 0.9em;
+  margin-bottom: 0.2em;
+}
+
+.reveal .timeline-item .timeline-body {
+  font-size: 0.75em;
+  font-weight: 300;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+/* Dark slide timeline */
+.reveal .slides section.dark-slide .timeline {
+  border-left-color: rgba(255, 255, 255, 0.25);
+}
+
+.reveal .slides section.dark-slide .timeline-item::before {
+  background: #FFFFFF;
+}
+
+.reveal .slides section.dark-slide .timeline-item .timeline-date {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.reveal .slides section.dark-slide .timeline-item .timeline-body {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ===== Path/Flow Comparison (A vs B pattern) ===== */
+.reveal .path-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2em;
+  margin-top: 1em;
+}
+
+.reveal .path-item {
+  padding: 1.5em;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.reveal .path-item.path-highlight {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.reveal .path-item .path-label {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.55em;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.5);
+  margin-bottom: 0.8em;
+}
+
+.reveal .path-item .path-title {
+  font-weight: 600;
+  font-size: 1em;
+  margin-bottom: 0.5em;
+}
+
+.reveal .path-item .path-flow {
+  font-size: 0.75em;
+  line-height: 1.6;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.reveal .path-item .path-result {
+  font-style: italic;
+  font-size: 0.7em;
+  color: rgba(0, 0, 0, 0.5);
+  margin-top: 1em;
+}
+
+/* ===== Layer Stack (3-tier architecture diagram) ===== */
+.reveal .layer-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 1em;
+}
+
+.reveal .layer-item {
+  padding: 1em 1.5em;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  margin-top: -1px;
+}
+
+.reveal .layer-item:first-child {
+  margin-top: 0;
+}
+
+.reveal .layer-item.layer-dark {
+  background: #000000;
+  color: #FFFFFF;
+  border-color: #000000;
+}
+
+.reveal .layer-item.layer-highlight {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.reveal .layer-item .layer-label {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.5em;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  margin-bottom: 0.5em;
+}
+
+.reveal .layer-item .layer-title {
+  font-weight: 600;
+  font-size: 0.9em;
+  margin-bottom: 0.3em;
+}
+
+.reveal .layer-item .layer-items {
+  font-size: 0.7em;
+  opacity: 0.8;
+}
+
+.reveal .layer-item .layer-desc {
+  font-size: 0.65em;
+  font-style: italic;
+  opacity: 0.6;
+  margin-top: 0.5em;
 }
 
 /* ===== PDF Print Styles ===== */
