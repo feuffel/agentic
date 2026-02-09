@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Systemization of Things</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F6F0EB;
+    --accent: #000000;
+    --accent-dim: rgba(0,0,0,0.06);
+    --text: #000000;
+    --text-dim: rgba(0,0,0,0.35);
+    --text-mid: rgba(0,0,0,0.55);
+    --divider: #D6D0CB;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .header {
+    padding: 7vh 7vw 2vh;
+    flex-shrink: 0;
+    opacity: 0;
+    animation: fadeIn 0.8s ease 0.2s forwards;
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+  }
+
+  .header h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 3rem;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+  }
+
+  /* ── FULL STAGE ── */
+  .stage {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 3vh 7vw 12vh;
+    min-height: 0;
+    position: relative;
+  }
+
+  .y-label {
+    font-family: 'Fira Code', monospace;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.5);
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeIn 0.5s ease 0.5s forwards;
+  }
+
+  .x-label {
+    font-family: 'Fira Code', monospace;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.5);
+    text-align: center;
+    padding-left: 58px;
+    margin-top: 8px;
+    opacity: 0;
+    animation: fadeIn 0.5s ease 0.5s forwards;
+  }
+
+  .chart-container {
+    flex: 1;
+    display: flex;
+    min-height: 0;
+    overflow: visible;
+    opacity: 0;
+    animation: fadeIn 0.6s ease 0.6s forwards;
+  }
+
+  .y-axis {
+    width: 58px;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+    flex-shrink: 0;
+    padding-bottom: 50px;
+  }
+
+  .y-axis span {
+    font-family: 'Fira Code', monospace;
+    font-size: 1rem;
+    font-weight: 500;
+    color: rgba(0,0,0,0.5);
+    text-align: right;
+    padding-right: 10px;
+  }
+
+  .chart-area {
+    flex: 1;
+    position: relative;
+  }
+
+  canvas#lineChart {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .year-watermark {
+    position: absolute;
+    bottom: 40px;
+    right: 76px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 7rem;
+    font-weight: 700;
+    color: rgba(0,0,0,0.04);
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+    transition: opacity 0.3s;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  /* ── FLOATING LABEL (near icon) ── */
+  .floating-label {
+    position: absolute;
+    z-index: 50;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateX(8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--text);
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  .floating-label.show {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* ── ICON NODES ── */
+  .icon-node {
+    position: absolute;
+    width: 52px;
+    height: 52px;
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    opacity: 0;
+    transform: scale(0) translateY(40px);
+    pointer-events: none;
+    transition: opacity 0.25s, transform 0.2s;
+    cursor: pointer;
+  }
+
+  .icon-node.visible {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    pointer-events: auto;
+    animation: iconFlyIn 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  .icon-node.highlight {
+    z-index: 30;
+    transform: scale(1.2) translateY(-2px);
+  }
+
+  .icon-node.dimmed {
+    opacity: 0.15;
+  }
+
+  .icon-node svg {
+    width: 36px;
+    height: 36px;
+    stroke: var(--accent);
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  @keyframes iconFlyIn {
+    0% { opacity: 0; transform: scale(0.3) translateY(50px); }
+    60% { opacity: 1; transform: scale(1.08) translateY(-3px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Systemization of Things</h1>
+</div>
+
+<div class="stage">
+  <div class="chart-container">
+    <div class="y-label">Millions of Hours Executed</div>
+    <div class="y-axis" id="yAxis"></div>
+    <div class="chart-area" id="chartArea">
+      <canvas id="lineChart"></canvas>
+      <div class="year-watermark" id="yearWatermark"></div>
+      <div class="floating-label" id="floatingLabel"></div>
+    </div>
+  </div>
+  <div class="x-label">Year</div>
+</div>
+
+<script>
+const dataPoints = [
+  { year: 2001, value: 1.5 }, { year: 2002, value: 3 },   { year: 2003, value: 5 },
+  { year: 2004, value: 8 },   { year: 2005, value: 12 },  { year: 2006, value: 15 },
+  { year: 2007, value: 19 },  { year: 2008, value: 23 },  { year: 2009, value: 27 },
+  { year: 2010, value: 33 },  { year: 2011, value: 37 },  { year: 2012, value: 45 },
+  { year: 2013, value: 55 },  { year: 2014, value: 71 },  { year: 2015, value: 81 },
+];
+
+const software = [
+  { year: 2002, name: 'Progressing System', icon: 'trending-up' },
+  { year: 2007, name: 'enScope', icon: 'package' },
+  { year: 2009, name: 'MatX', icon: 'grid' },
+  { year: 2010, name: 'Document Log', icon: 'file-text' },
+  { year: 2012, name: 'iQ', icon: 'check-circle' },
+  { year: 2012, name: 'Q\u00b7DIS', icon: 'link' },
+  { year: 2013, name: 'HeviLift', icon: 'arrow-up-circle' },
+  { year: 2013, name: 'Pressure Tracking', icon: 'gauge' },
+  { year: 2014, name: 'Downstream', icon: 'git-branch' },
+  { year: 2014, name: 'Order Management', icon: 'shopping-cart' },
+  { year: 2014, name: 'Integra', icon: 'dollar-sign' },
+  { year: 2014, name: 'Campfire', icon: 'home' },
+  { year: 2014, name: 'Industrial Estimating', icon: 'calculator' },
+  { year: 2015, name: 'FrameWork', icon: 'layers' },
+  { year: 2015, name: 'Complete', icon: 'check-square' },
+];
+
+const maxVal = 90;
+const yTicks = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90];
+
+const iconSVGs = {
+  'trending-up': '<polyline points="4 14 8 9 12 11 18 5"/><polyline points="14 5 18 5 18 9"/>',
+  'package': '<path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/><path d="M12 22V12"/><polyline points="3.29 7 12 12 20.71 7"/><path d="m7.5 4.27 9 5.15"/>',
+  'grid': '<path d="M12 12H5a2 2 0 0 0-2 2v5"/><circle cx="13" cy="19" r="2"/><circle cx="5" cy="19" r="2"/><path d="M8 19h3m5-17v17h6M6 12V7c0-1.1.9-2 2-2h3l5 5"/>',
+  'file-text': '<rect width="20" height="16" x="2" y="4" rx="2"/><path d="M12 9v11"/><path d="M2 9h13a2 2 0 0 1 2 2v9"/>',
+  'check-circle': '<circle cx="12" cy="12" r="9"/><polyline points="9 12 11 14 15 10"/>',
+  'link': '<path d="m8 11 2 2 4-4"/><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
+  'arrow-up-circle': '<circle cx="12" cy="12" r="9"/><polyline points="8 12 12 8 16 12"/><line x1="12" y1="16" x2="12" y2="8"/>',
+  'gauge': '<circle cx="12" cy="14" r="8"/><line x1="12" y1="14" x2="15" y2="9"/>',
+  'git-branch': '<circle cx="6" cy="6" r="2"/><circle cx="18" cy="18" r="2"/><circle cx="6" cy="18" r="2"/><line x1="6" y1="8" x2="6" y2="16"/><path d="M6 8c0 4 12 4 12 8"/>',
+  'shopping-cart': '<circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a1 1 0 001 .8h9.7a1 1 0 001-.8L21 6H6"/>',
+  'dollar-sign': '<line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>',
+  'home': '<path d="M12 2c1 3 2.5 3.5 3.5 4.5A5 5 0 0 1 17 10a5 5 0 1 1-10 0c0-.3 0-.6.1-.9a2 2 0 1 0 3.3-2C8 4.5 11 2 12 2Z"/><path d="m5 22 14-4"/><path d="m5 18 14 4"/>',
+  'calculator': '<rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/>',
+  'layers': '<rect width="18" height="18" x="3" y="3" rx="2"/><path d="M12 9v6"/><path d="M16 15v6"/><path d="M16 3v6"/><path d="M3 15h18"/><path d="M3 9h18"/><path d="M8 15v6"/><path d="M8 3v6"/>',
+  'check-square': '<rect x="3" y="3" width="18" height="18" rx="2"/><polyline points="9 12 11 14 15 10"/>',
+};
+
+// Build Y axis
+const yAxisEl = document.getElementById('yAxis');
+yTicks.forEach(v => { const s = document.createElement('span'); s.textContent = v; yAxisEl.appendChild(s); });
+
+// ── CANVAS ──
+const canvas = document.getElementById('lineChart');
+const ctx = canvas.getContext('2d');
+const chartArea = document.getElementById('chartArea');
+let W, H, padBottom = 50, padRight = 70, padTop = 10, padLeft = 34;
+let pointCoords = [];
+
+function resize() {
+  const rect = chartArea.getBoundingClientRect();
+  W = rect.width; H = rect.height;
+  canvas.width = W * devicePixelRatio;
+  canvas.height = H * devicePixelRatio;
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
+  ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+  computeCoords();
+}
+
+function computeCoords() {
+  const chartH = H - padBottom - padTop;
+  const chartW = W - padRight - padLeft;
+  pointCoords = dataPoints.map((d, i) => ({
+    x: padLeft + (i / (dataPoints.length - 1)) * chartW,
+    y: padTop + chartH - (d.value / maxVal) * chartH,
+    year: d.year, value: d.value
+  }));
+}
+
+function xForYear(year) { const i = dataPoints.findIndex(d => d.year === year); return i >= 0 ? pointCoords[i].x : 0; }
+function yForYear(year) { const i = dataPoints.findIndex(d => d.year === year); return i >= 0 ? pointCoords[i].y : 0; }
+
+// ── DRAW ──
+let revealIndex = -1;
+
+function drawBezierSegment(startIdx, endIdx) {
+  for (let i = startIdx; i <= endIdx; i++) {
+    if (i === 0) ctx.moveTo(pointCoords[i].x, pointCoords[i].y);
+    else {
+      const prev = pointCoords[i - 1], curr = pointCoords[i];
+      const cpx = (prev.x + curr.x) / 2;
+      ctx.bezierCurveTo(cpx, prev.y, cpx, curr.y, curr.x, curr.y);
+    }
+  }
+}
+
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+  if (pointCoords.length === 0) return;
+
+  const chartH = H - padBottom - padTop;
+  const chartW = W - padRight - padLeft;
+
+  // Horizontal gridlines
+  ctx.strokeStyle = 'rgba(0,0,0,0.08)';
+  ctx.lineWidth = 1;
+  yTicks.forEach(v => {
+    const y = padTop + chartH - (v / maxVal) * chartH;
+    ctx.beginPath(); ctx.moveTo(padLeft, y); ctx.lineTo(padLeft + chartW, y); ctx.stroke();
+  });
+
+  // Vertical gridlines
+  ctx.strokeStyle = 'rgba(0,0,0,0.05)';
+  pointCoords.forEach(p => {
+    ctx.beginPath(); ctx.moveTo(p.x, padTop); ctx.lineTo(p.x, padTop + chartH); ctx.stroke();
+  });
+
+  // X labels
+  pointCoords.forEach((p, i) => {
+    const isActive = i === revealIndex;
+    const isPast = i < revealIndex;
+    ctx.fillStyle = isActive ? '#000000' : isPast ? 'rgba(0,0,0,0.45)' : 'rgba(0,0,0,0.2)';
+    ctx.font = isActive ? '700 20px "Space Grotesk", sans-serif' : '500 17px "Space Grotesk", sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(p.year, p.x, H - 22);
+  });
+
+  if (revealIndex < 0) return;
+  const showCount = Math.min(revealIndex + 1, pointCoords.length);
+
+  // Area fill
+  ctx.beginPath();
+  ctx.moveTo(pointCoords[0].x, padTop + chartH);
+  drawBezierSegment(0, showCount - 1);
+  ctx.lineTo(pointCoords[showCount - 1].x, padTop + chartH);
+  ctx.closePath();
+  const grad = ctx.createLinearGradient(0, padTop, 0, padTop + chartH);
+  grad.addColorStop(0, 'rgba(0,0,0,0.10)');
+  grad.addColorStop(1, 'rgba(0,0,0,0.01)');
+  ctx.fillStyle = grad;
+  ctx.fill();
+
+  // Line
+  ctx.beginPath();
+  drawBezierSegment(0, showCount - 1);
+  ctx.strokeStyle = '#000000';
+  ctx.lineWidth = 4;
+  ctx.stroke();
+
+  // Dots
+  for (let i = 0; i < showCount; i++) {
+    const p = pointCoords[i];
+    const isActive = i === revealIndex;
+
+    if (isActive) {
+      ctx.beginPath(); ctx.arc(p.x, p.y, 14, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(0,0,0,0.06)'; ctx.fill();
+    }
+
+    ctx.beginPath(); ctx.arc(p.x, p.y, isActive ? 5 : 3, 0, Math.PI * 2);
+    ctx.fillStyle = isActive ? '#000000' : 'rgba(0,0,0,0.3)'; ctx.fill();
+
+    if (isActive) {
+      ctx.font = '500 15px "Fira Code", monospace';
+      ctx.fillStyle = 'rgba(0,0,0,0.5)';
+      ctx.textAlign = 'center';
+      ctx.fillText(p.value + 'M', p.x, p.y + 24);
+    }
+  }
+
+  // Scan line
+  if (revealIndex >= 0) {
+    const ax = pointCoords[revealIndex].x;
+    ctx.beginPath(); ctx.moveTo(ax, padTop); ctx.lineTo(ax, padTop + chartH + 4);
+    ctx.strokeStyle = 'rgba(0,0,0,0.06)'; ctx.lineWidth = 1;
+    ctx.setLineDash([4, 4]); ctx.stroke(); ctx.setLineDash([]);
+  }
+}
+
+// ── ICONS ──
+const iconNodes = [];
+const byYear = {};
+software.forEach(s => { if (!byYear[s.year]) byYear[s.year] = []; byYear[s.year].push(s); });
+
+function createIconNodes() {
+  iconNodes.forEach(n => n.el.remove());
+  iconNodes.length = 0;
+
+  software.forEach((s, globalIdx) => {
+    const el = document.createElement('div');
+    el.className = 'icon-node';
+    const stackIndex = byYear[s.year].indexOf(s);
+    el.innerHTML = `<svg viewBox="0 0 24 24">${iconSVGs[s.icon]}</svg>`;
+    chartArea.appendChild(el);
+    iconNodes.push({ el, data: s, stackIndex, globalIdx });
+  });
+}
+
+function positionIcons() {
+  iconNodes.forEach(node => {
+    const x = xForYear(node.data.year);
+    const y = yForYear(node.data.year);
+    const count = byYear[node.data.year].length;
+    const spacing = count > 3 ? 44 : 56;
+    const offset = node.stackIndex * spacing;
+    node.el.style.left = (x - 26) + 'px';
+    node.el.style.top = (y - 70 - offset) + 'px';
+  });
+}
+
+// ── LINE INTERPOLATION (for collision detection) ──
+function getLineYAtX(x) {
+  const end = Math.min(revealIndex + 1, pointCoords.length);
+  for (let i = 0; i < end - 1; i++) {
+    const p0 = pointCoords[i], p1 = pointCoords[i + 1];
+    if (x >= p0.x && x <= p1.x) {
+      const t = (x - p0.x) / (p1.x - p0.x);
+      return p0.y + t * (p1.y - p0.y);
+    }
+  }
+  // Beyond drawn line — check future segments too for safety
+  for (let i = end - 1; i < pointCoords.length - 1; i++) {
+    const p0 = pointCoords[i], p1 = pointCoords[i + 1];
+    if (x >= p0.x && x <= p1.x) {
+      const t = (x - p0.x) / (p1.x - p0.x);
+      return p0.y + t * (p1.y - p0.y);
+    }
+  }
+  return null;
+}
+
+// ── FLOATING LABEL ──
+const floatingLabel = document.getElementById('floatingLabel');
+let activeNode = null;
+
+function showLabel(item, node) {
+  floatingLabel.classList.remove('show');
+
+  const delay = activeNode ? 150 : 10;
+
+  setTimeout(() => {
+    floatingLabel.textContent = item.name;
+    floatingLabel.classList.add('show');
+    activeNode = node;
+
+    const iconLeft = parseFloat(node.el.style.left);
+    const iconTop = parseFloat(node.el.style.top);
+    const iconCenterX = iconLeft + 26;
+    let labelX = iconLeft + 58;
+    let labelY = iconTop + 16;
+    const labelH = 30;
+    const labelW = 200;
+
+    // Check if placing label to the right would overlap with the line
+    let conflicts = false;
+    for (let sx = labelX; sx <= labelX + labelW; sx += 15) {
+      const lineY = getLineYAtX(sx);
+      if (lineY !== null && lineY >= labelY - labelH / 2 && lineY <= labelY + labelH / 2) {
+        conflicts = true;
+        break;
+      }
+    }
+
+    floatingLabel.style.right = '';
+    floatingLabel.style.left = '';
+
+    if (conflicts) {
+      // Place label above the icon instead
+      floatingLabel.style.left = Math.max(0, iconCenterX - 10) + 'px';
+      floatingLabel.style.top = (iconTop - 28) + 'px';
+    } else if (labelX + labelW > W) {
+      // Overflow right — place to the left
+      floatingLabel.style.right = (W - iconLeft + 8) + 'px';
+      floatingLabel.style.top = labelY + 'px';
+    } else {
+      floatingLabel.style.left = labelX + 'px';
+      floatingLabel.style.top = labelY + 'px';
+    }
+
+    // Highlight active icon, dim others
+    iconNodes.forEach(n => {
+      n.el.classList.remove('highlight', 'dimmed');
+      if (n.el.classList.contains('visible')) {
+        if (n.data === item) n.el.classList.add('highlight');
+        else n.el.classList.add('dimmed');
+      }
+    });
+  }, delay);
+}
+
+function hideLabel() {
+  floatingLabel.classList.remove('show');
+  iconNodes.forEach(n => n.el.classList.remove('highlight', 'dimmed'));
+  activeNode = null;
+}
+
+// ── PLAYBACK ──
+let playing = false;
+let timer = null;
+const appTimers = [];
+
+const yearWatermark = document.getElementById('yearWatermark');
+const YEAR_DURATION = 1000; // fixed ms per year
+const APP_STAGGER = 250;   // ms between app reveals within a year
+
+function playSequence() {
+  if (playing) return;
+  playing = true;
+  let yearIdx = 0;
+
+  function advanceYear() {
+    if (!playing || yearIdx >= dataPoints.length) {
+      playing = false;
+      // Hide the last label after a few seconds
+      const hideTimer = setTimeout(hideLabel, 1000);
+      appTimers.push(hideTimer);
+      return;
+    }
+
+    // Advance line
+    hideLabel();
+    revealIndex = yearIdx;
+    yearWatermark.textContent = dataPoints[yearIdx].year;
+    draw();
+    positionIcons();
+
+    // Reveal apps for this year with stagger
+    const year = dataPoints[yearIdx].year;
+    const apps = software.filter(s => s.year === year);
+    apps.forEach((app, i) => {
+      const globalIdx = software.indexOf(app);
+      const node = iconNodes[globalIdx];
+      const t = setTimeout(() => {
+        if (!playing && yearIdx < dataPoints.length) return;
+        node.el.classList.add('visible');
+        node.el.style.animationDelay = '0s';
+        showLabel(app, node);
+      }, 200 + i * APP_STAGGER);
+      appTimers.push(t);
+    });
+
+    yearIdx++;
+    timer = setTimeout(advanceYear, YEAR_DURATION);
+  }
+
+  advanceYear();
+}
+
+// ── INIT ──
+function init() {
+  resize();
+  createIconNodes();
+  positionIcons();
+  draw();
+
+  iconNodes.forEach(n => {
+    n.el.addEventListener('click', () => {
+      playing = false;
+      clearTimeout(timer);
+      appTimers.forEach(clearTimeout);
+      appTimers.length = 0;
+      showLabel(n.data, n);
+    });
+  });
+
+  setTimeout(playSequence, 1200);
+}
+
+window.addEventListener('resize', () => {
+  resize();
+  positionIcons();
+  draw();
+});
+
+init();
+</script>
+</body>
+</html>

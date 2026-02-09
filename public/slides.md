@@ -1,5 +1,5 @@
 
-<!-- .slide: data-background-iframe="vanta-bg.html" data-background-color="#000000" -->
+<!-- .slide: data-background-iframe="vanta-bg.html?v=2" data-background-color="#000000" class="dark-slide" -->
 
 # Agentic AI
 
@@ -225,25 +225,51 @@ Multi-agent architectures mirror how human teams work. Different models or promp
 
 ---
 
-## Real-World Applications
+## Real-world applications
 
-- **Software Engineering** — coding agents (Claude Code, Copilot, Cursor)
-- **Research** — literature review, hypothesis generation
-- **Data Analysis** — autonomous EDA and reporting
-- **Customer Support** — multi-step issue resolution
-- **DevOps** — incident response and remediation
+<div class="grid-2col">
+  <div class="grid-cell">
+    <h4>Software Engineering</h4>
+    <p>Coding agents (Claude Code, Copilot, Cursor)</p>
+  </div>
+  <div class="grid-cell">
+    <h4>Research</h4>
+    <p>Literature review, hypothesis generation</p>
+  </div>
+  <div class="grid-cell">
+    <h4>Data Analysis</h4>
+    <p>Autonomous EDA and reporting</p>
+  </div>
+  <div class="grid-cell">
+    <h4>Customer Support</h4>
+    <p>Multi-step issue resolution</p>
+  </div>
+  <div class="grid-cell">
+    <h4>DevOps</h4>
+    <p>Incident response and remediation</p>
+  </div>
+  <div class="grid-cell">
+    <h4>Finance</h4>
+    <p>Portfolio analysis, compliance automation</p>
+  </div>
+</div>
 
 Note:
 Coding agents are the most mature agentic application today. They can write, test, debug, and commit code with minimal human oversight.
 
 ---
 
-<!-- .slide: data-background="#FAFAF8" -->
-
-<iframe data-src="market-cap-losses.html" width="960" height="700" frameborder="0" style="border:none; max-width:95vw; max-height:90vh;"></iframe>
+<iframe data-src="market-cap-losses.html" width="1920" height="1080" frameborder="0" style="border:none; max-width:100%; max-height:100%;"></iframe>
 
 Note:
 The DeepSeek R1 release triggered significant market cap losses across major software companies in late January 2026 — a sign of how seriously the market takes agentic AI disruption.
+
+---
+
+<iframe data-src="systemization_of_things.html" width="1920" height="1080" frameborder="0" style="border:none; max-width:100%; max-height:100%;"></iframe>
+
+Note:
+An animated timeline of software systemization from 2002 to 2016 — tracking the evolution from a single progressing system to a full suite of 15 integrated applications managing millions of work hours.
 
 ---
 
@@ -343,13 +369,25 @@ Remember: the simplest agent is just a loop. Build from there, adding complexity
 
 ---
 
+## Claude
+
+<img src="claude_shannon.png" alt="Claude Shannon" style="max-height: 55vh; max-width: 80vw; object-fit: contain;" />
+
+---
+
+<iframe data-src="clawd-walk.html" width="1700" height="950" frameborder="0" style="border:none; max-width:95%; max-height:95%;"></iframe>
+
+---
+
+<!-- .slide: data-background-color="#000000" class="dark-slide" -->
+
 # Thank You
 
 ### Questions?
 
 <br>
 
-*Press **S** for speaker notes throughout this deck*
+Press **S** for speaker notes throughout this deck
 
 Note:
 Thank you for attending! Happy to take questions about any of the topics we covered.

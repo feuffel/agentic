@@ -4,86 +4,95 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Market Cap Losses — Software Companies</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #FAFAF8;
-    --bar: #FF6B40;
-    --bar-glow: rgba(255, 107, 64, 0.15);
-    --text-primary: #1A1A1A;
-    --text-secondary: #6B6B6B;
-    --text-value: #D94420;
-    --ticker: #999;
-    --source: #888;
-    --link: #3366AA;
+    --bg: #F6F0EB;
+    --bar: #000000;
+    --text-primary: #000000;
+    --text-secondary: #666666;
+    --text-value: #000000;
+    --ticker: #666666;
+    --source: #666666;
+    --divider: #D6D0CB;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
     background: var(--bg);
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Space Grotesk', sans-serif;
     color: var(--text-primary);
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 0 1.5rem;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
   }
 
   .chart-container {
     width: 100%;
-    max-width: 960px;
-    max-height: 100vh;
-    overflow: hidden;
+    height: 100%;
+    padding: 7vh 7vw 12vh 7vw;
+    display: flex;
+    flex-direction: column;
     position: relative;
   }
 
   .chart-title {
-    font-size: clamp(3rem, 7vw, 4.5rem);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 3.8rem;
     font-weight: 700;
     letter-spacing: -0.03em;
     line-height: 1.15;
-    margin-bottom: 0.2rem;
+    margin-bottom: 0.15rem;
     opacity: 0;
     transform: translateY(12px);
     animation: fadeUp 0.6s ease-out forwards;
   }
 
   .chart-subtitle {
-    font-size: 0.85rem;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
     color: var(--text-secondary);
-    margin-bottom: 0.8rem;
+    margin-bottom: 1.2rem;
     opacity: 0;
     transform: translateY(10px);
     animation: fadeUp 0.5s ease-out 0.15s forwards;
   }
 
-  .rows { display: flex; flex-direction: column; gap: 0.35rem; }
+  .rows {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    flex: 1;
+    justify-content: center;
+  }
 
   .row {
     display: grid;
-    grid-template-columns: 100px 1fr 200px;
+    grid-template-columns: 130px 1fr 260px;
     align-items: center;
     gap: 0;
-    height: 32px;
+    height: 44px;
     opacity: 0;
     transform: translateY(8px);
   }
 
   .value {
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: 700;
-    font-size: 0.92rem;
+    font-family: 'Fira Code', monospace;
+    font-weight: 500;
+    font-size: 1.05rem;
     color: var(--text-value);
     text-align: right;
-    padding-right: 12px;
+    padding-right: 16px;
     white-space: nowrap;
     opacity: 0;
   }
 
   .bar-track {
-    height: 24px;
+    height: 32px;
     position: relative;
     display: flex;
     justify-content: flex-start;
@@ -92,30 +101,12 @@
   .bar {
     height: 100%;
     background: var(--bar);
-    border-radius: 2px;
     width: 0;
     position: relative;
-    box-shadow: 0 2px 12px var(--bar-glow);
-    transition: box-shadow 0.3s ease;
-  }
-
-  .bar:hover {
-    box-shadow: 0 4px 24px rgba(255, 107, 64, 0.35);
-  }
-
-  .bar::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 40%;
-    background: linear-gradient(180deg, rgba(255,255,255,0.18) 0%, transparent 100%);
-    border-radius: 2px 2px 0 0;
   }
 
   .label {
-    padding-left: 14px;
+    padding-left: 18px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -123,38 +114,37 @@
   }
 
   .company-name {
+    font-family: 'Space Grotesk', sans-serif;
     font-weight: 700;
-    font-size: 0.95rem;
+    font-size: 1.1rem;
     line-height: 1.2;
     color: var(--text-primary);
     white-space: nowrap;
   }
 
   .ticker {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Fira Code', monospace;
     font-size: 0.72rem;
     font-weight: 500;
     color: var(--ticker);
-    letter-spacing: 0.04em;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
   }
 
   .source {
-    margin-top: 0.5rem;
-    font-size: 0.78rem;
+    font-size: 0.82rem;
     color: var(--source);
     opacity: 0;
     animation: fadeUp 0.4s ease-out 2.6s forwards;
   }
 
-  .source a { color: var(--link); text-decoration: underline; }
+  .source a { color: var(--text-primary); text-decoration: underline; }
 
   /* total line */
   .total-callout {
     margin-top: 0.6rem;
-    padding: 0.5rem 1rem;
-    background: linear-gradient(135deg, rgba(255,107,64,0.06) 0%, rgba(255,107,64,0.02) 100%);
-    border-left: 3px solid var(--bar);
-    border-radius: 0 6px 6px 0;
+    padding: 0.6rem 0 0;
+    border-top: 1px solid var(--divider);
     display: flex;
     align-items: baseline;
     gap: 0.6rem;
@@ -164,16 +154,34 @@
   }
 
   .total-label {
-    font-size: 0.85rem;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.75rem;
     color: var(--text-secondary);
     font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
   }
 
   .total-value {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Space Grotesk', sans-serif;
     font-weight: 700;
-    font-size: 1.3rem;
-    color: var(--text-value);
+    font-size: 1.5rem;
+    color: var(--text-primary);
+  }
+
+  /* Persistent footer — matches presentation footer positioning */
+  .chart-footer {
+    position: absolute;
+    bottom: 16px;
+    left: 8%;
+    right: 8%;
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Fira Code', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 19px;
+    color: var(--text-secondary);
   }
 
   @keyframes fadeUp {
@@ -201,10 +209,15 @@
 
   <div class="total-callout">
     <span class="total-label">Combined loss</span>
-    <span class="total-value">–$425.6b</span>
+    <span class="total-value">&ndash;$425.6b</span>
   </div>
 
   <p class="source">Data: <a href="#">Financial Modeling Prep</a>; Chart: Axios Visuals</p>
+
+  <div class="chart-footer">
+    <span>2026 Industrial Leadership Meeting</span>
+    <span>March 11, 2026</span>
+  </div>
 </div>
 
 <script>
@@ -215,7 +228,7 @@ const data = [
   { company: "AppLovin",            ticker: "APP",  value: 22.6  },
   { company: "Salesforce",          ticker: "CRM",  value: 21.9  },
   { company: "ServiceNow",          ticker: "NOW",  value: 16.2  },
-  { company: "Intuit",              ticker: "INTU", value: 15.7  },
+  { company: "Intuit",              ticker: "INTU",  value: 15.7  },
   { company: "CrowdStrike",         ticker: "CRWD", value: 11.2  },
   { company: "Palo Alto Networks",  ticker: "PANW", value: 11.2  },
   { company: "Adobe",               ticker: "ADBE", value: 9.9   },
