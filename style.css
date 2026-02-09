@@ -205,10 +205,15 @@
   color: rgba(255, 255, 255, 0.5);
 }
 
-/* ===== Title slide (background iframe) — white text, no text-shadow ===== */
+/* ===== Title slide (background iframe) — centered white text ===== */
+.reveal .slides section[data-background-iframe] {
+  text-align: center;
+}
+
 .reveal section[data-background-iframe] h1,
 .reveal section[data-background-iframe] h3 {
   color: #FFFFFF !important;
+  text-align: center;
 }
 
 /* ===== Projection guides (toggle with G key) ===== */
@@ -332,4 +337,10 @@
 
 .reveal .slide-background iframe {
   z-index: 0 !important;
+  pointer-events: none;
+}
+
+/* ===== Overview mode — disable pointer events on inline iframes so slides are clickable ===== */
+.reveal.overview iframe {
+  pointer-events: none;
 }
