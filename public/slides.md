@@ -10,13 +10,20 @@ Welcome to this presentation on Agentic AI. We'll explore what makes AI systems 
 
 ---
 
-<!-- .slide: data-background-color="#000000" class="dark-slide" -->
+<!-- .slide: class="side-by-side-slide" -->
 
-<div class="metric-display">
-<span class="metric-label">Wiped from global software stocks in 48 hours</span>
-<span class="metric-value">$285B</span>
-<p class="metric-description">February 3–4, 2026</p>
-<p class="metric-description">This isn't a correction. This is an industry being repriced.</p>
+## <!-- .element: class="visually-hidden" --> Market Impact
+
+<div class="side-by-side">
+<div class="side-box side-cream">
+<p class="side-description">This isn't a correction. This is an industry being repriced.</p>
+<p class="side-source">February 3–4, 2026</p>
+</div>
+<div class="side-box side-black">
+<span class="side-label">Wiped from global software stocks</span>
+<span class="side-metric">$285B</span>
+<p class="side-metric-desc">In just 48 hours.</p>
+</div>
 </div>
 
 Note:
