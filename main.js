@@ -15,12 +15,39 @@ Reveal.initialize({
   width: 1920,
   height: 1080,
   plugins: [Markdown, Highlight, Notes],
+  // PDF export settings
+  pdfSeparateFragments: false, // Don't create separate pages for fragments
+  pdfMaxPagesPerSlide: 1,      // One page per slide
 }).then(() => {
   Reveal.on('slidechanged', event => {
     const iframe = event.currentSlide.querySelector('iframe[data-src*="clawd-walk"]');
     if (iframe && iframe.contentWindow) {
       iframe.contentWindow.postMessage('replay', '*');
     }
+  });
+
+  // Add footer to all slides with headings (skip iframe-only slides)
+  document.querySelectorAll('.reveal .slides section').forEach(section => {
+    // Skip nested sections (vertical slides container)
+    if (section.parentElement.tagName === 'SECTION') return;
+
+    // Skip iframe-only slides (no headings)
+    if (!section.querySelector('h1, h2, h3, h4, h5, h6')) return;
+
+    const footer = document.createElement('div');
+    footer.className = 'slide-footer';
+    footer.innerHTML = '<span class="footer-left">2026 Industrial Leadership Meeting</span><span class="footer-right">March 11, 2026</span>';
+    section.appendChild(footer);
+  });
+
+  // Also handle vertical slides
+  document.querySelectorAll('.reveal .slides section section').forEach(section => {
+    if (!section.querySelector('h1, h2, h3, h4, h5, h6')) return;
+
+    const footer = document.createElement('div');
+    footer.className = 'slide-footer';
+    footer.innerHTML = '<span class="footer-left">2026 Industrial Leadership Meeting</span><span class="footer-right">March 11, 2026</span>';
+    section.appendChild(footer);
   });
 
   // Projection guides — toggle with G key

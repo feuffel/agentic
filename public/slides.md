@@ -10,21 +10,29 @@ Welcome to this presentation on Agentic AI. We'll explore what makes AI systems 
 
 ---
 
+<!-- .slide: class="compact-slide" -->
+
 ## Agenda
 
-1. What is Agentic AI?
-2. Spectrum of autonomy
-3. Core architecture
-4. Tool use & function calling
-5. The ReAct pattern
-6. Planning strategies
-7. Memory systems
-8. Multi-agent systems
-9. Real-world applications
-10. Safety & alignment
-11. Building your first agent
-12. Frameworks & tools
-13. The road ahead
+<div class="agenda-columns">
+<ol>
+<li>What is Agentic AI?</li>
+<li>Spectrum of autonomy</li>
+<li>Core architecture</li>
+<li>Tool use & function calling</li>
+<li>The ReAct pattern</li>
+<li>Planning strategies</li>
+<li>Memory systems</li>
+</ol>
+<ol start="8">
+<li>Multi-agent systems</li>
+<li>Real-world applications</li>
+<li>Safety & alignment</li>
+<li>Building your first agent</li>
+<li>Frameworks & tools</li>
+<li>The road ahead</li>
+</ol>
+</div>
 
 Note:
 Here's a roadmap of what we'll cover today.
@@ -59,6 +67,8 @@ Agentic AI sits on a spectrum. Not every system needs full autonomy — pick the
 
 ---
 
+<!-- .slide: class="compact-code" -->
+
 ## Core Architecture
 
 ```text
@@ -88,6 +98,8 @@ The core loop: the LLM reasons about the goal, plans next steps, calls tools, st
 
 ---
 
+<!-- .slide: class="compact-code" -->
+
 ## Tool Use & Function Calling
 
 ```json
@@ -116,6 +128,8 @@ Tool definitions use JSON Schema. The model doesn't execute anything — it outp
 
 ---
 
+<!-- .slide: class="compact-code" -->
+
 ## The ReAct Pattern
 
 **Re**asoning + **Act**ing in an interleaved loop:
@@ -143,6 +157,8 @@ How agents break down complex goals
 
 ----
 
+<!-- .slide: class="compact-code" -->
+
 ### Task Decomposition
 
 Break a big goal into manageable sub-tasks:
@@ -166,6 +182,8 @@ Note:
 Good decomposition is the key to reliable agents. Each sub-task should be small enough that the LLM can handle it in one pass.
 
 ----
+
+<!-- .slide: class="compact-code" -->
 
 ### Reflection & Self-Critique
 
@@ -204,6 +222,8 @@ Note:
 Without memory, agents repeat mistakes and lose context. Memory systems let agents learn from experience and maintain coherence over long tasks.
 
 ---
+
+<!-- .slide: class="compact-code" -->
 
 ## Multi-Agent Systems
 
@@ -273,6 +293,8 @@ An animated timeline of software systemization from 2002 to 2016 — tracking th
 
 ---
 
+<!-- .slide: class="compact-slide" -->
+
 ## Safety & Alignment
 
 ### Key Challenges
@@ -292,6 +314,8 @@ Note:
 Safety isn't optional. Every production agent needs guardrails. The key principle: make it easy to supervise and hard to cause harm.
 
 ---
+
+<!-- .slide: class="compact-code compact-slide-xs" -->
 
 ## Building Your First Agent
 

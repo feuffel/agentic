@@ -12,8 +12,10 @@
 /* ===== Left-align all slide content (override Reveal.js centering) ===== */
 .reveal .slides section {
   text-align: left;
-  padding: 5% 8%;
+  padding: 7% 7% 15% 7%; /* top=7%, sides=7%, bottom=15% (12% + footer space) */
   box-sizing: border-box;
+  width: 100%;
+  height: 100%;
 }
 
 /* ===== Typography hierarchy ===== */
@@ -38,6 +40,7 @@
   font-weight: 600;
   font-size: 1.2em;
 }
+
 
 .reveal p,
 .reveal li {
@@ -142,38 +145,37 @@
   box-shadow: none;
 }
 
-/* ===== Persistent footer via pseudo-elements ===== */
-.reveal .slides section::before,
-.reveal .slides section::after {
+/* ===== Persistent footer (DOM element added via JS) ===== */
+/* Positioned at bottom of content zone (12% from slide bottom) */
+.reveal .slides section .slide-footer {
+  position: absolute;
+  bottom: 12%;
+  left: 7%;
+  right: 7%;
+  display: flex;
+  justify-content: space-between;
   font-family: 'Fira Code', monospace;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   font-size: 0.45em;
   color: #666666;
-  position: absolute;
-  bottom: 0.75em;
-  z-index: 10;
+  z-index: 100;
+  pointer-events: none;
 }
 
-.reveal .slides section::before {
-  content: '2026 Industrial Leadership Meeting';
-  left: 8%;
+.reveal .slides section .slide-footer .footer-left,
+.reveal .slides section .slide-footer .footer-right {
+  background: transparent;
 }
 
-.reveal .slides section::after {
-  content: 'March 11, 2026';
-  right: 8%;
+/* Dark slide footer — muted white */
+.reveal .slides section.dark-slide .slide-footer {
+  color: rgba(255, 255, 255, 0.5);
 }
 
 /* Iframe-only slides (no heading) — remove padding for full-bleed content */
 .reveal .slides section:not(:has(h1, h2, h3, h4, h5, h6)) {
   padding: 0;
-}
-
-/* Hide footer on iframe-only slides (no heading — just visualization) */
-.reveal .slides section:not(:has(h1, h2, h3, h4, h5, h6))::before,
-.reveal .slides section:not(:has(h1, h2, h3, h4, h5, h6))::after {
-  display: none;
 }
 
 /* ===== Dark-slide variant ===== */
@@ -199,11 +201,6 @@
   border-color: rgba(255, 255, 255, 0.25);
 }
 
-/* Dark-slide footer — muted white */
-.reveal .slides section.dark-slide::before,
-.reveal .slides section.dark-slide::after {
-  color: rgba(255, 255, 255, 0.5);
-}
 
 /* ===== Title slide (background iframe) — centered white text ===== */
 .reveal .slides section[data-background-iframe] {
@@ -343,4 +340,119 @@
 /* ===== Overview mode — disable pointer events on inline iframes so slides are clickable ===== */
 .reveal.overview iframe {
   pointer-events: none;
+}
+
+/* ===== Compact slide variants for content-heavy slides ===== */
+
+/* Standard compact — 85% scale for slides with many bullets */
+.reveal .slides section.compact-slide {
+  font-size: 0.85em;
+}
+
+.reveal .slides section.compact-slide h2 {
+  font-size: 1.5em;
+}
+
+.reveal .slides section.compact-slide h3 {
+  font-size: 1.1em;
+}
+
+/* Extra compact — 75% scale for very dense slides */
+.reveal .slides section.compact-slide-xs {
+  font-size: 0.75em;
+}
+
+.reveal .slides section.compact-slide-xs h2 {
+  font-size: 1.4em;
+}
+
+/* Compact code — smaller code blocks with tighter line height */
+.reveal .slides section.compact-code pre {
+  font-size: 0.75em;
+  line-height: 1.35;
+}
+
+.reveal .slides section.compact-code pre code {
+  padding: 0.8em 1em;
+}
+
+/* Two-column agenda layout */
+.reveal .slides section .agenda-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 3em;
+}
+
+.reveal .slides section .agenda-columns ol {
+  margin: 0;
+  padding-left: 1.5em;
+}
+
+.reveal .slides section .agenda-columns ol:first-child {
+  list-style-position: inside;
+}
+
+.reveal .slides section .agenda-columns ol li {
+  margin-bottom: 0.3em;
+}
+
+/* ===== PDF Print Styles ===== */
+/* Reveal.js adds .print-pdf class when exporting to PDF via ?print-pdf */
+
+/* Force solid backgrounds for dark slides (iframes don't render in PDF) */
+.print-pdf .reveal .slides section.dark-slide,
+.print-pdf .reveal .slides section[data-background-iframe] {
+  background: #000000 !important;
+}
+
+/* Ensure dark slide text stays white in PDF */
+.print-pdf .reveal .slides section.dark-slide,
+.print-pdf .reveal .slides section.dark-slide h1,
+.print-pdf .reveal .slides section.dark-slide h2,
+.print-pdf .reveal .slides section.dark-slide h3,
+.print-pdf .reveal .slides section.dark-slide h4,
+.print-pdf .reveal .slides section.dark-slide p,
+.print-pdf .reveal .slides section.dark-slide li {
+  color: #FFFFFF !important;
+}
+
+/* Title slide with background iframe — force black bg and white text */
+.print-pdf .reveal .slides section[data-background-iframe] h1,
+.print-pdf .reveal .slides section[data-background-iframe] h3 {
+  color: #FFFFFF !important;
+}
+
+/* Preserve light slide colors in PDF */
+.print-pdf .reveal .slides section:not(.dark-slide):not([data-background-iframe]) {
+  background: #F6F0EB !important;
+}
+
+.print-pdf .reveal .slides section:not(.dark-slide):not([data-background-iframe]) h1,
+.print-pdf .reveal .slides section:not(.dark-slide):not([data-background-iframe]) h2,
+.print-pdf .reveal .slides section:not(.dark-slide):not([data-background-iframe]) h3,
+.print-pdf .reveal .slides section:not(.dark-slide):not([data-background-iframe]) h4,
+.print-pdf .reveal .slides section:not(.dark-slide):not([data-background-iframe]) p,
+.print-pdf .reveal .slides section:not(.dark-slide):not([data-background-iframe]) li {
+  color: #000000 !important;
+}
+
+/* Grid cells need explicit background in PDF */
+.print-pdf .reveal .grid-2col .grid-cell {
+  background: #F6F0EB !important;
+}
+
+/* Hide projection guides in PDF */
+.print-pdf .projection-guides {
+  display: none !important;
+}
+
+/* Iframe slides — show placeholder message in PDF since iframes don't render */
+.print-pdf .reveal .slides section:has(iframe:not([data-background-iframe])):not(:has(h1, h2, h3, h4)) .iframe-placeholder {
+  display: block;
+  text-align: center;
+  padding: 40% 10%;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.8em;
+  color: #666666;
+  background: #F6F0EB;
 }
