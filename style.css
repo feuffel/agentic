@@ -1047,3 +1047,45 @@
   color: #666666;
   background: #F6F0EB;
 }
+
+/* ===== Quote Slide (animated word swap) ===== */
+.reveal .slides section.quote-slide {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.reveal .slides section.quote-slide .quote-text {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 6.2em;
+  font-weight: 700;
+  font-style: italic;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  color: #FFFFFF;
+  padding-left: 0.5em;
+  padding-top: 0.2em;
+}
+
+.reveal .slides section.quote-slide .swap-word {
+  position: relative;
+  display: inline-block;
+  margin-right: 0.25em;
+}
+
+.reveal .slides section.quote-slide .swap-word .fragment.fade-out {
+  display: inline-block;
+  width: 100%;
+}
+
+.reveal .slides section.quote-slide .swap-word .fragment.fade-in {
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: nowrap;
+}
+
+.reveal .slides section.quote-slide .swap-word em {
+  font-style: italic;
+}

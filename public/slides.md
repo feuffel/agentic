@@ -865,6 +865,17 @@ Clear, specific asks that leadership can act on.
 
 ---
 
+<!-- .slide: data-background-color="#000000" class="dark-slide quote-slide" -->
+
+<div class="quote-text">
+&ldquo;What gets<br><span class="swap-word"><span class="fragment fade-out" data-fragment-index="0">measured</span><span class="fragment fade-in" data-fragment-index="0"><em>facilitated</em></span></span><br>gets done.&rdquo;
+</div>
+
+Note:
+This reframes the classic management adage — it's not about measurement alone, but about actively enabling and supporting the work.
+
+---
+
 <!-- .slide: data-background-color="#000000" class="dark-slide" -->
 
 # Thank You
