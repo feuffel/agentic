@@ -1089,3 +1089,17 @@
 .reveal .slides section.quote-slide .swap-word em {
   font-style: italic;
 }
+
+/* ===== Text Lights Animation (neon glow effect) ===== */
+@keyframes text-lights {
+  0%, 100% {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ff00ff, 0 0 20px #ff00ff, 0 0 35px #ff00ff, 0 0 40px #ff00ff;
+  }
+  50% {
+    text-shadow: 0 0 2px #fff, 0 0 5px #fff, 0 0 8px #00ffff, 0 0 12px #00ffff, 0 0 18px #00ffff, 0 0 22px #00ffff;
+  }
+}
+
+.reveal .slides section.quote-slide .swap-word .fragment.fade-in.visible em {
+  animation: text-lights 2s linear infinite;
+}
