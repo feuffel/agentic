@@ -315,6 +315,16 @@ iframe {
   border: none !important;
 }
 
+/* ===== Title Slide with Vanta Background ===== */
+.slidev-layout.title-slide {
+  background: transparent !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
 /* ===== Side-by-Side Slide ===== */
 .side-by-side-slide {
   padding: 0 !important;

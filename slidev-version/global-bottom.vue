@@ -23,18 +23,12 @@ const isIframeSlide = computed(() => currentLayout.value === 'iframe')
   right: 7%;
   display: flex;
   justify-content: space-between;
-  font-family: 'Fira Code', monospace;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   font-size: 11px;
-  color: rgba(0, 0, 0, 0.5);
+  color: rgba(255, 255, 255, 0.4);
   z-index: 100;
   pointer-events: none;
-}
-
-/* Dark slide footer */
-:global(.dark-slide) .slide-footer,
-:global([background="black"]) .slide-footer {
-  color: rgba(255, 255, 255, 0.5);
 }
 </style>

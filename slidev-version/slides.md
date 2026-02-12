@@ -2,7 +2,7 @@
 theme: default
 title: Agentic AI
 info: From Concepts To Code
-class: text-center
+class: title-slide
 highlighter: shiki
 drawings:
   persist: false
@@ -14,7 +14,7 @@ mdc: true
   <iframe src="/vanta-bg.html" class="w-full h-full border-none" />
 </div>
 
-# Agentic AIo
+# Agentic AI
 
 ### From Concepts To Code
 
