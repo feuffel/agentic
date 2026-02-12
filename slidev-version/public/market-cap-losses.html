@@ -31,19 +31,18 @@
   .chart-container {
     width: 100%;
     height: 100%;
-    padding: 7vh 7vw 12vh 7vw;
+    padding: 3vh 4vw 4vh 4vw;
     display: flex;
     flex-direction: column;
-    position: relative;
   }
 
   .chart-title {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 3.8rem;
+    font-size: 2.8rem;
     font-weight: 700;
     letter-spacing: -0.03em;
-    line-height: 1.15;
-    margin-bottom: 0.15rem;
+    line-height: 1.1;
+    margin-bottom: 0.1rem;
     opacity: 0;
     transform: translateY(12px);
     animation: fadeUp 0.6s ease-out forwards;
@@ -51,12 +50,12 @@
 
   .chart-subtitle {
     font-family: 'Fira Code', monospace;
-    font-size: 0.9rem;
+    font-size: 0.75rem;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.15em;
     color: var(--text-secondary);
-    margin-bottom: 1.2rem;
+    margin-bottom: 0.8rem;
     opacity: 0;
     transform: translateY(10px);
     animation: fadeUp 0.5s ease-out 0.15s forwards;
@@ -65,34 +64,42 @@
   .rows {
     display: flex;
     flex-direction: column;
-    gap: 0.45rem;
+    gap: 0.35rem;
     flex: 1;
     justify-content: center;
   }
 
   .row {
     display: grid;
-    grid-template-columns: 130px 1fr 260px;
+    grid-template-columns: 100px 1fr 200px;
     align-items: center;
     gap: 0;
-    height: 44px;
+    height: 38px;
     opacity: 0;
-    transform: translateY(8px);
+  }
+
+  .row.visible {
+    opacity: 1;
   }
 
   .value {
     font-family: 'Fira Code', monospace;
     font-weight: 500;
-    font-size: 1.05rem;
+    font-size: 0.9rem;
     color: var(--text-value);
     text-align: right;
-    padding-right: 16px;
+    padding-right: 12px;
     white-space: nowrap;
     opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .row.visible .value {
+    opacity: 1;
   }
 
   .bar-track {
-    height: 32px;
+    height: 26px;
     position: relative;
     display: flex;
     justify-content: flex-start;
@@ -102,11 +109,11 @@
     height: 100%;
     background: var(--bar);
     width: 0;
-    position: relative;
+    transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
   }
 
   .label {
-    padding-left: 18px;
+    padding-left: 14px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -116,7 +123,7 @@
   .company-name {
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     line-height: 1.2;
     color: var(--text-primary);
     white-space: nowrap;
@@ -124,7 +131,7 @@
 
   .ticker {
     font-family: 'Fira Code', monospace;
-    font-size: 0.72rem;
+    font-size: 0.65rem;
     font-weight: 500;
     color: var(--ticker);
     letter-spacing: 0.15em;
@@ -132,30 +139,47 @@
   }
 
   .source {
-    font-size: 0.82rem;
+    font-size: 0.72rem;
     color: var(--source);
     opacity: 0;
-    animation: fadeUp 0.4s ease-out 2.6s forwards;
+    transition: opacity 0.4s ease;
+    margin-top: 0.6rem;
+    flex-shrink: 0;
+  }
+
+  .source.visible {
+    opacity: 1;
   }
 
   .source a { color: var(--text-primary); text-decoration: underline; }
 
-  /* total line */
-  .total-callout {
-    margin-top: 0.6rem;
-    padding: 0.6rem 0 0;
-    border-top: 1px solid var(--divider);
-    display: flex;
-    align-items: baseline;
-    gap: 0.6rem;
+  /* total callout - inline after last row, right-aligned */
+  .total-row {
+    display: grid;
+    grid-template-columns: 100px 1fr 200px;
+    align-items: start;
+    gap: 0;
+    flex-shrink: 0;
+    padding-top: 0.3rem;
     opacity: 0;
-    transform: translateY(6px);
-    animation: fadeUp 0.5s ease-out 2.4s forwards;
+    transition: opacity 0.4s ease;
+  }
+
+  .total-row.visible {
+    opacity: 1;
+  }
+
+  .total-row .total-content {
+    grid-column: 3;
+    padding-left: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .total-label {
     font-family: 'Fira Code', monospace;
-    font-size: 0.75rem;
+    font-size: 0.6rem;
     color: var(--text-secondary);
     font-weight: 500;
     text-transform: uppercase;
@@ -165,37 +189,13 @@
   .total-value {
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 700;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     color: var(--text-primary);
-  }
-
-  /* Persistent footer — matches presentation footer positioning */
-  .chart-footer {
-    position: absolute;
-    bottom: 16px;
-    left: 8%;
-    right: 8%;
-    display: flex;
-    justify-content: space-between;
-    font-family: 'Fira Code', monospace;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    font-size: 19px;
-    color: var(--text-secondary);
+    line-height: 1;
   }
 
   @keyframes fadeUp {
     to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes growBar {
-    from { width: 0; }
-  }
-
-  @keyframes popValue {
-    0% { opacity: 0; transform: scale(0.8); }
-    60% { transform: scale(1.05); }
-    100% { opacity: 1; transform: scale(1); }
   }
 </style>
 </head>
@@ -207,17 +207,14 @@
 
   <div class="rows" id="rows"></div>
 
-  <div class="total-callout">
-    <span class="total-label">Combined loss</span>
-    <span class="total-value">&ndash;$425.6b</span>
+  <div class="total-row" id="total">
+    <div class="total-content">
+      <span class="total-label">Combined loss</span>
+      <span class="total-value">&ndash;$425.6b</span>
+    </div>
   </div>
 
-  <p class="source">Data: <a href="#">Financial Modeling Prep</a>; Chart: Axios Visuals</p>
-
-  <div class="chart-footer">
-    <span>2026 Industrial Leadership Meeting</span>
-    <span>March 11, 2026</span>
-  </div>
+  <p class="source" id="source">Data: <a href="#">Financial Modeling Prep</a>; Chart: Axios Visuals</p>
 </div>
 
 <script>
@@ -236,23 +233,19 @@ const data = [
 
 const maxValue = data[0].value;
 const container = document.getElementById("rows");
+const rows = [];
 
+// Create all rows first
 data.forEach((d, i) => {
   const pct = (d.value / maxValue) * 100;
-  const rowDelay = 0.3 + i * 0.12;
-  const barDelay = rowDelay + 0.15;
-  const valDelay = barDelay + 0.25;
 
   const row = document.createElement("div");
   row.className = "row";
-  row.style.animation = `fadeUp 0.4s ease-out ${rowDelay}s forwards`;
 
   row.innerHTML = `
-    <div class="value" style="animation: popValue 0.4s ease-out ${valDelay}s forwards;">
-      –$${d.value.toFixed(1)}b
-    </div>
+    <div class="value">–$${d.value.toFixed(1)}b</div>
     <div class="bar-track">
-      <div class="bar" style="animation: growBar 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) ${barDelay}s forwards; width: 0;" data-width="${pct}%"></div>
+      <div class="bar" data-width="${pct}"></div>
     </div>
     <div class="label">
       <span class="company-name">${d.company}</span>
@@ -261,32 +254,47 @@ data.forEach((d, i) => {
   `;
 
   container.appendChild(row);
+  rows.push(row);
 });
 
-// Set final widths after animation
-document.querySelectorAll('.bar').forEach(bar => {
+// Animate bars one by one
+const BAR_DURATION = 800; // ms for bar to grow
+const DELAY_BETWEEN = 250; // ms pause between bars
+
+function animateRow(index) {
+  if (index >= rows.length) {
+    // All done, show total and source
+    setTimeout(() => {
+      document.getElementById('total').classList.add('visible');
+      setTimeout(() => {
+        document.getElementById('source').classList.add('visible');
+      }, 300);
+    }, 200);
+    return;
+  }
+
+  const row = rows[index];
+  const bar = row.querySelector('.bar');
   const targetWidth = bar.dataset.width;
-  bar.style.setProperty('--target', targetWidth);
-  bar.addEventListener('animationend', () => {
-    bar.style.width = targetWidth;
-  });
-});
 
-// Override the growBar animation to use data-driven width
-const style = document.createElement('style');
-data.forEach((d, i) => {
-  const pct = (d.value / maxValue) * 100;
-  style.textContent += `
-    .rows .row:nth-child(${i + 1}) .bar {
-      animation-name: growBar${i};
-    }
-    @keyframes growBar${i} {
-      from { width: 0; }
-      to { width: ${pct}%; }
-    }
-  `;
-});
-document.head.appendChild(style);
+  // Show row
+  row.classList.add('visible');
+
+  // Grow bar
+  requestAnimationFrame(() => {
+    bar.style.width = targetWidth + '%';
+  });
+
+  // Schedule next row after this bar finishes
+  setTimeout(() => {
+    animateRow(index + 1);
+  }, BAR_DURATION + DELAY_BETWEEN);
+}
+
+// Start animation after a brief delay
+setTimeout(() => {
+  animateRow(0);
+}, 600);
 </script>
 
 </body>
