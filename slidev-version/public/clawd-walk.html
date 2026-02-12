@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claw'd Walking</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #F6F0EB; overflow: hidden; height: 100vh; }
+  :root { --s: 20px; }
+
+  .clawd-container {
+    position: fixed;
+    bottom: calc(50% - 60px);
+    z-index: 10;
+    left: -250px;
+  }
+
+  .bounce { transition: transform 0.15s; }
+  .bounce.walking {
+    animation: bounce 0.32s ease-in-out infinite;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+
+  /* Jump */
+  .bounce.jumping {
+    animation: jump 0.6s ease-in-out;
+  }
+  @keyframes jump {
+    0% { transform: translateY(0); }
+    35% { transform: translateY(-60px); }
+    70% { transform: translateY(-60px); }
+    100% { transform: translateY(0); }
+  }
+
+  .art { position: relative; width: calc(10*var(--s)); height: calc(9*var(--s)); }
+
+  .b { position: absolute; width: calc(var(--s) + 1px); height: calc(var(--s) + 1px); background: #D08060; }
+  .b.eye { background: #000; }
+
+  .blink-wrap { position: absolute; }
+  .blink-wrap.blinked { transform: scaleY(0.1); }
+  .blink-wrap { transition: transform 0.07s ease-in-out; }
+
+  .leg1, .leg2, .leg3, .leg4 { position: absolute; }
+  .leg1.walking { animation: swA 0.32s ease-in-out infinite; transform-origin: calc(var(--s)/2) 0; }
+  .leg2.walking { animation: swB 0.32s ease-in-out infinite; transform-origin: calc(var(--s)/2) 0; }
+  .leg3.walking { animation: swA 0.32s ease-in-out infinite; transform-origin: calc(var(--s)/2) 0; }
+  .leg4.walking { animation: swB 0.32s ease-in-out infinite; transform-origin: calc(var(--s)/2) 0; }
+  @keyframes swA { 0%,100%{transform:rotate(-12deg)} 50%{transform:rotate(12deg)} }
+  @keyframes swB { 0%,100%{transform:rotate(12deg)} 50%{transform:rotate(-12deg)} }
+
+  .arm-l, .arm-r { position: absolute; transition: transform 0.3s; }
+  .arm-l.walking { animation: armL 0.32s ease-in-out infinite; transform-origin: var(--s) 0; }
+  .arm-r.walking { animation: armR 0.32s ease-in-out infinite; transform-origin: 0 0; }
+  @keyframes armL { 0%,100%{transform:rotate(10deg)} 50%{transform:rotate(-10deg)} }
+  @keyframes armR { 0%,100%{transform:rotate(-10deg)} 50%{transform:rotate(10deg)} }
+
+  /* Wave animation for right arm */
+  .arm-r.waving {
+    animation: wave 0.3s ease-in-out infinite alternate;
+    transform-origin: 0 0;
+  }
+  @keyframes wave {
+    0% { transform: rotate(-75deg); }
+    100% { transform: rotate(-105deg); }
+  }
+
+  .controls { position:fixed; bottom:24px; right:24px; z-index:20; display:flex; gap:6px; }
+
+  #title {
+    position: fixed;
+    bottom: calc(50% + 160px);
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Poppins', Arial, sans-serif;
+    font-weight: 600;
+    font-size: 3rem;
+    color: #141413;
+    letter-spacing: -0.02em;
+    opacity: 0;
+    transition: opacity 1.2s ease-in;
+    z-index: 20;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  #title.visible { opacity: 1; }
+  .speed-btn {
+    background:rgba(0,0,0,0.05); border:1.5px solid rgba(0,0,0,0.1); color:#6b5b50;
+    padding:7px 14px; border-radius:16px; font-family:system-ui,sans-serif; font-size:0.8rem;
+    cursor:pointer; transition:all 0.3s;
+  }
+  .speed-btn:hover,.speed-btn.active {
+    background:rgba(207,127,99,0.15); border-color:rgba(207,127,99,0.4); color:#8b4e3a;
+  }
+</style>
+</head>
+<body>
+
+<div id="title">Meet Claw'd</div>
+
+<div class="clawd-container" id="clawd">
+  <div class="bounce" id="bouncer">
+    <div class="art">
+
+      <!-- Row 1: top body -->
+      <div class="b" style="left:calc(1*var(--s));top:calc(1*var(--s))"></div>
+      <div class="b" style="left:calc(2*var(--s));top:calc(1*var(--s))"></div>
+      <div class="b" style="left:calc(3*var(--s));top:calc(1*var(--s))"></div>
+      <div class="b" style="left:calc(4*var(--s));top:calc(1*var(--s))"></div>
+      <div class="b" style="left:calc(5*var(--s));top:calc(1*var(--s))"></div>
+      <div class="b" style="left:calc(6*var(--s));top:calc(1*var(--s))"></div>
+      <div class="b" style="left:calc(7*var(--s));top:calc(1*var(--s))"></div>
+      <div class="b" style="left:calc(8*var(--s));top:calc(1*var(--s))"></div>
+
+      <!-- Row 2: EYES near corners -->
+      <div class="b" style="left:calc(1*var(--s));top:calc(2*var(--s))"></div>
+      <div class="blink-wrap" style="left:calc(2*var(--s));top:calc(2*var(--s));width:var(--s);height:var(--s);transform-origin:50% 50%">
+        <div class="b eye" style="left:0;top:0"></div>
+      </div>
+      <div class="b" style="left:calc(3*var(--s));top:calc(2*var(--s))"></div>
+      <div class="b" style="left:calc(4*var(--s));top:calc(2*var(--s))"></div>
+      <div class="b" style="left:calc(5*var(--s));top:calc(2*var(--s))"></div>
+      <div class="b" style="left:calc(6*var(--s));top:calc(2*var(--s))"></div>
+      <div class="blink-wrap" style="left:calc(7*var(--s));top:calc(2*var(--s));width:var(--s);height:var(--s);transform-origin:50% 50%">
+        <div class="b eye" style="left:0;top:0"></div>
+      </div>
+      <div class="b" style="left:calc(8*var(--s));top:calc(2*var(--s))"></div>
+
+      <!-- Row 3: body + arms -->
+      <div class="b" style="left:calc(1*var(--s));top:calc(3*var(--s))"></div>
+      <div class="b" style="left:calc(2*var(--s));top:calc(3*var(--s))"></div>
+      <div class="b" style="left:calc(3*var(--s));top:calc(3*var(--s))"></div>
+      <div class="b" style="left:calc(4*var(--s));top:calc(3*var(--s))"></div>
+      <div class="b" style="left:calc(5*var(--s));top:calc(3*var(--s))"></div>
+      <div class="b" style="left:calc(6*var(--s));top:calc(3*var(--s))"></div>
+      <div class="b" style="left:calc(7*var(--s));top:calc(3*var(--s))"></div>
+      <div class="b" style="left:calc(8*var(--s));top:calc(3*var(--s))"></div>
+
+      <!-- Row 4: body -->
+      <div class="b" style="left:calc(1*var(--s));top:calc(4*var(--s))"></div>
+      <div class="b" style="left:calc(2*var(--s));top:calc(4*var(--s))"></div>
+      <div class="b" style="left:calc(3*var(--s));top:calc(4*var(--s))"></div>
+      <div class="b" style="left:calc(4*var(--s));top:calc(4*var(--s))"></div>
+      <div class="b" style="left:calc(5*var(--s));top:calc(4*var(--s))"></div>
+      <div class="b" style="left:calc(6*var(--s));top:calc(4*var(--s))"></div>
+      <div class="b" style="left:calc(7*var(--s));top:calc(4*var(--s))"></div>
+      <div class="b" style="left:calc(8*var(--s));top:calc(4*var(--s))"></div>
+
+      <!-- Row 5: bottom body -->
+      <div class="b" style="left:calc(1*var(--s));top:calc(5*var(--s))"></div>
+      <div class="b" style="left:calc(2*var(--s));top:calc(5*var(--s))"></div>
+      <div class="b" style="left:calc(3*var(--s));top:calc(5*var(--s))"></div>
+      <div class="b" style="left:calc(4*var(--s));top:calc(5*var(--s))"></div>
+      <div class="b" style="left:calc(5*var(--s));top:calc(5*var(--s))"></div>
+      <div class="b" style="left:calc(6*var(--s));top:calc(5*var(--s))"></div>
+      <div class="b" style="left:calc(7*var(--s));top:calc(5*var(--s))"></div>
+      <div class="b" style="left:calc(8*var(--s));top:calc(5*var(--s))"></div>
+
+      <!-- Arms -->
+      <div class="arm-l" id="armL" style="left:0;top:calc(3*var(--s))">
+        <div class="b" style="left:0;top:0;height:calc(1.5*var(--s))"></div>
+      </div>
+      <div class="arm-r" id="armR" style="left:calc(9*var(--s));top:calc(3*var(--s))">
+        <div class="b" style="left:0;top:0;height:calc(1.5*var(--s))"></div>
+      </div>
+
+      <!-- Legs -->
+      <div class="leg1" id="leg1" style="left:calc(1*var(--s));top:calc(6*var(--s))">
+        <div class="b" style="left:0;top:0"></div>
+        <div class="b" style="left:0;top:var(--s)"></div>
+      </div>
+      <div class="leg2" id="leg2" style="left:calc(3*var(--s));top:calc(6*var(--s))">
+        <div class="b" style="left:0;top:0"></div>
+        <div class="b" style="left:0;top:var(--s)"></div>
+      </div>
+      <div class="leg3" id="leg3" style="left:calc(6*var(--s));top:calc(6*var(--s))">
+        <div class="b" style="left:0;top:0"></div>
+        <div class="b" style="left:0;top:var(--s)"></div>
+      </div>
+      <div class="leg4" id="leg4" style="left:calc(8*var(--s));top:calc(6*var(--s))">
+        <div class="b" style="left:0;top:0"></div>
+        <div class="b" style="left:0;top:var(--s)"></div>
+      </div>
+
+    </div>
+  </div>
+  <div style="position:absolute;bottom:-4px;left:50%;transform:translateX(-50%);width:100px;height:8px;background:rgba(0,0,0,0.05);border-radius:50%;"></div>
+</div>
+
+
+<script>
+const clawd = document.getElementById('clawd');
+const bouncer = document.getElementById('bouncer');
+const armL = document.getElementById('armL');
+const armR = document.getElementById('armR');
+const legs = [document.getElementById('leg1'), document.getElementById('leg2'), document.getElementById('leg3'), document.getElementById('leg4')];
+
+function setWalking(on) {
+  const cls = on ? 'add' : 'remove';
+  bouncer.classList[cls]('walking');
+  armL.classList[cls]('walking');
+  armR.classList[cls]('walking');
+  legs.forEach(l => l.classList[cls]('walking'));
+}
+
+function setWaving(on) {
+  if (on) {
+    armR.classList.remove('walking');
+    armR.classList.add('waving');
+  } else {
+    armR.classList.remove('waving');
+  }
+}
+
+function doJump() {
+  return new Promise(resolve => {
+    bouncer.classList.add('jumping');
+    bouncer.addEventListener('animationend', function handler() {
+      bouncer.removeEventListener('animationend', handler);
+      bouncer.classList.remove('jumping');
+      resolve();
+    });
+  });
+}
+
+function walkTo(targetX, duration) {
+  return new Promise(resolve => {
+    clawd.style.transition = `left ${duration}ms linear`;
+    clawd.style.left = targetX + 'px';
+    setTimeout(resolve, duration);
+  });
+}
+
+async function runSequence() {
+  const artWidth = 200;
+  const centerX = (window.innerWidth - artWidth) / 2;
+
+  // Reset
+  clawd.style.transition = 'none';
+  clawd.style.left = '-250px';
+  setWalking(false);
+  setWaving(false);
+
+  // Small delay to reset
+  await new Promise(r => setTimeout(r, 50));
+
+  // Phase 1: Walk to center
+  setWalking(true);
+  await walkTo(centerX, 3000);
+
+  // Phase 2: Stop
+  setWalking(false);
+  await new Promise(r => setTimeout(r, 300));
+
+  // Phase 3: Jump
+  await doJump();
+  await new Promise(r => setTimeout(r, 200));
+  await doJump();
+  await new Promise(r => setTimeout(r, 400));
+
+  // Phase 4: Stay stopped, fade in title
+  document.getElementById('title').classList.add('visible');
+}
+
+function replay() {
+  document.getElementById('title').classList.remove('visible');
+  clawd.style.transition = 'none';
+  clawd.style.left = '-250px';
+  setWalking(false);
+  setWaving(false);
+  bouncer.classList.remove('jumping');
+  setTimeout(runSequence, 100);
+}
+
+// Random blinking with variability
+const eyes = document.querySelectorAll('.blink-wrap');
+function singleBlink(duration) {
+  return new Promise(resolve => {
+    eyes.forEach(e => e.classList.add('blinked'));
+    setTimeout(() => {
+      eyes.forEach(e => e.classList.remove('blinked'));
+      resolve();
+    }, duration);
+  });
+}
+async function doBlink() {
+  const roll = Math.random();
+  if (roll < 0.15) {
+    // Quick double blink
+    await singleBlink(80);
+    await new Promise(r => setTimeout(r, 150));
+    await singleBlink(80);
+  } else if (roll < 0.3) {
+    // Long slow blink
+    await singleBlink(250);
+  } else if (roll < 0.45) {
+    // Quick blink
+    await singleBlink(60);
+  } else {
+    // Normal blink
+    await singleBlink(120);
+  }
+  setTimeout(doBlink, 1000 + Math.random() * 5000);
+}
+setTimeout(doBlink, 800 + Math.random() * 1500);
+
+runSequence();
+
+// Replay when parent slide navigates to this iframe
+window.addEventListener('message', function(e) {
+  if (e.data === 'replay') {
+    document.getElementById('title').classList.remove('visible');
+    clawd.style.transition = 'none';
+    clawd.style.left = '-250px';
+    setWalking(false);
+    setWaving(false);
+    bouncer.classList.remove('jumping');
+    setTimeout(runSequence, 100);
+  }
+});
+</script>
+</body>
+</html>

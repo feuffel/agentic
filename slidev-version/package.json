@@ -1,0 +1,14 @@
+{
+  "name": "agentic-slidev",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "slidev",
+    "build": "slidev build",
+    "export": "slidev export"
+  },
+  "dependencies": {
+    "@slidev/cli": "^0.50.0",
+    "@slidev/theme-default": "latest"
+  }
+}

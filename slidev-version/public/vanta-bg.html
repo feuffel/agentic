@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #000000; }
+  #wrapper { position: absolute; top: 5%; left: 5%; width: 90%; height: 90%; overflow: hidden; }
+  #bg { width: 100%; height: 100%; }
+</style>
+</head>
+<body>
+<div id="wrapper">
+  <div id="bg"></div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.halo.min.js"></script>
+<script>
+var effect = VANTA.HALO({
+  el: '#bg',
+  mouseControls: true,
+  touchControls: true,
+  gyroControls: false,
+  backgroundColor: 0x000000,
+  baseColor: 0xD4956A,
+  color2: 0xB07850,
+  size: 2,
+  speed: 1,
+  amplitudeFactor: 1.5,
+  scale: 1,
+  scaleMobile: 1,
+});
+</script>
+</body>
+</html>

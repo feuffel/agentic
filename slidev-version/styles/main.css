@@ -1,0 +1,321 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* ===== Figma Slides-Inspired Theme ===== */
+/* Dark gradient backgrounds, bold typography, vibrant accents */
+
+:root {
+  /* Core palette */
+  --bg-dark: #0D0D0D;
+  --bg-gradient-start: #1a1a2e;
+  --bg-gradient-mid: #16213e;
+  --bg-gradient-end: #0f0f23;
+
+  /* Text colors */
+  --text-primary: #FFFFFF;
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --text-muted: rgba(255, 255, 255, 0.5);
+
+  /* Accent colors - vibrant gradients */
+  --accent-pink: #FF6B9D;
+  --accent-purple: #C471ED;
+  --accent-cyan: #12D8FA;
+  --accent-blue: #667eea;
+
+  /* Surface colors */
+  --surface-card: rgba(255, 255, 255, 0.05);
+  --surface-card-hover: rgba(255, 255, 255, 0.08);
+  --border-subtle: rgba(255, 255, 255, 0.1);
+
+  /* Slidev overrides */
+  --slidev-slide-container-background: var(--bg-gradient-mid);
+  --slidev-theme-primary: var(--accent-cyan);
+  --slidev-theme-background: var(--bg-gradient-mid);
+}
+
+/* Base slide styling */
+.slidev-layout {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-mid) 50%, var(--bg-gradient-end) 100%) !important;
+  color: var(--text-primary);
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  text-align: left;
+  padding: 7% !important;
+}
+
+/* Typography hierarchy */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  text-transform: none !important;
+  color: var(--text-primary);
+  letter-spacing: -0.03em;
+}
+
+h1 {
+  font-weight: 800 !important;
+  font-size: 3em !important;
+  line-height: 1 !important;
+  margin-bottom: 0.4em !important;
+}
+
+h2 {
+  font-weight: 700 !important;
+  font-size: 2em !important;
+  line-height: 1 !important;
+  margin-bottom: 0.4em !important;
+}
+
+h3 {
+  font-weight: 600 !important;
+  font-size: 1.3em !important;
+  margin-bottom: 0.5em !important;
+  color: var(--text-secondary) !important;
+}
+
+/* Paragraph and list text */
+p, li {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+em {
+  color: var(--accent-cyan);
+}
+
+/* Code styling */
+code, pre, .slidev-code {
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+pre {
+  border-radius: 12px !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3) !important;
+  background: rgba(0, 0, 0, 0.4) !important;
+  border: 1px solid var(--border-subtle) !important;
+}
+
+code:not(pre code) {
+  background: var(--surface-card) !important;
+  padding: 0.15em 0.4em !important;
+  border-radius: 4px !important;
+  color: var(--accent-cyan) !important;
+}
+
+/* Blockquotes — dramatic with accent border */
+blockquote {
+  background: transparent !important;
+  border: none !important;
+  border-left: 3px solid var(--accent-pink) !important;
+  box-shadow: none !important;
+  padding: 0 0 0 1em !important;
+  margin: 1em 0 !important;
+  font-weight: 500 !important;
+  font-size: 1.2em !important;
+  font-style: italic !important;
+  width: 100%;
+  color: var(--text-secondary) !important;
+}
+
+blockquote p {
+  font-weight: 500 !important;
+  font-style: italic !important;
+  color: var(--text-secondary) !important;
+}
+
+/* Links */
+a {
+  color: var(--accent-cyan) !important;
+  text-decoration: none !important;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+a:hover {
+  border-bottom-color: var(--accent-cyan) !important;
+}
+
+/* Horizontal dividers — gradient */
+hr {
+  border: none !important;
+  height: 1px !important;
+  background: linear-gradient(90deg, transparent, var(--accent-pink), var(--accent-purple), var(--accent-cyan), transparent) !important;
+  margin: 1.8em 0 !important;
+  opacity: 0.5 !important;
+}
+
+/* Tables */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  border: 1px solid var(--border-subtle);
+  padding: 0.6em 0.85em;
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+thead th {
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 600;
+  font-size: 0.65em;
+  background: var(--surface-card);
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+}
+
+/* ===== Dark Slide Variant (extra dark) ===== */
+.dark-slide,
+.slidev-layout.dark-slide {
+  background: var(--bg-dark) !important;
+}
+
+/* ===== Statement Slide (big impactful text) ===== */
+.statement-slide {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--bg-dark) !important;
+}
+
+.statement-slide h2 {
+  font-size: 2.2em !important;
+  margin-bottom: 0.5em !important;
+}
+
+.statement-slide h3 {
+  font-size: 1.6em !important;
+  color: var(--accent-cyan) !important;
+}
+
+.statement-slide p {
+  font-size: 1.1em;
+  max-width: 85%;
+  line-height: 1.6;
+}
+
+/* ===== Compact Slide Variants ===== */
+.compact-slide {
+  font-size: 0.85em;
+}
+
+.compact-slide h2 {
+  font-size: 1.6em !important;
+}
+
+.compact-slide h3 {
+  font-size: 1.15em !important;
+}
+
+/* ===== Centered Layout Override ===== */
+.slidev-layout.center {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.slidev-layout.center h1,
+.slidev-layout.center h2,
+.slidev-layout.center h3 {
+  text-align: center;
+}
+
+/* Center layout with dark bg */
+[background="black"] .slidev-layout,
+.slidev-page[style*="background: black"] .slidev-layout {
+  background: var(--bg-dark) !important;
+}
+
+/* ===== Quote Slide ===== */
+.quote-slide {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left !important;
+  background: var(--bg-dark) !important;
+}
+
+.quote-slide .quote-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 5.5em;
+  font-weight: 800;
+  font-style: italic;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  padding-left: 0.3em;
+  padding-top: 0.2em;
+}
+
+.quote-slide .swap-word {
+  position: relative;
+  display: inline-block;
+  min-width: 4em;
+}
+
+.quote-slide .word-measured {
+  display: inline-block;
+}
+
+.quote-slide .word-facilitated {
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: nowrap;
+  opacity: 0;
+}
+
+.quote-slide .word-facilitated.slidev-vclick-current,
+.quote-slide .word-facilitated.slidev-vclick-prior {
+  opacity: 1;
+}
+
+.quote-slide .word-facilitated em {
+  font-style: italic;
+  background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple), var(--accent-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Neon glow animation for facilitated word */
+@keyframes text-lights {
+  0%, 100% {
+    text-shadow: 0 0 5px rgba(255, 107, 157, 0.8), 0 0 10px rgba(255, 107, 157, 0.6), 0 0 20px rgba(255, 107, 157, 0.4), 0 0 40px rgba(196, 113, 237, 0.3);
+    filter: brightness(1.1);
+  }
+  50% {
+    text-shadow: 0 0 5px rgba(18, 216, 250, 0.8), 0 0 10px rgba(18, 216, 250, 0.6), 0 0 20px rgba(18, 216, 250, 0.4), 0 0 40px rgba(102, 126, 234, 0.3);
+    filter: brightness(1.2);
+  }
+}
+
+.quote-slide .word-facilitated.slidev-vclick-current em,
+.quote-slide .word-facilitated.slidev-vclick-prior em {
+  animation: text-lights 2.5s ease-in-out infinite;
+}
+
+/* ===== Iframe slides — full bleed ===== */
+.slidev-layout.iframe {
+  padding: 0 !important;
+}
+
+iframe {
+  border: none !important;
+}
+
+/* ===== Side-by-Side Slide ===== */
+.side-by-side-slide {
+  padding: 0 !important;
+}
