@@ -1,77 +1,97 @@
 # Agentic AI Presentation — AI Guide
 
+## Active Version
+
+The presentation now uses **Slidev** (in `slidev-version/`). The root-level Reveal.js version is deprecated.
+
 ## Commands
 
-- `npm run dev` — Start dev server with hot reload (http://localhost:5173)
-- `npm run build` — Build for production into `dist/`
-- `npm run preview` — Preview the production build
+Run from `slidev-version/`:
 
-## Project Structure
-
-- `index.html` — Presentation shell, loads slides from external Markdown
-- `main.js` — Reveal.js initialization, plugins, and configuration
-- `public/slides.md` — **All slide content lives here** (Markdown)
-
-## Editing Slides (`public/slides.md`)
-
-### Separators
-
-- `---` (on its own line) — New horizontal slide
-- `----` (on its own line) — New vertical sub-slide
-- `Note:` — Speaker notes (everything after this until next separator)
-
-### Code Blocks
-
-Use fenced code blocks with a language tag for syntax highlighting:
-
-````
-```python
-print("hello")
+```bash
+cd slidev-version
+npm run dev      # Start dev server (http://localhost:3030)
+npm run build    # Build for production
+npm run export   # Export to PDF
 ```
-````
 
-### Fragments (Incremental Reveals)
+## Project Structure (`slidev-version/`)
 
-Add `<!-- .element: class="fragment" -->` after a bullet point:
+- `slides.md` — All slide content and frontmatter config
+- `components/` — Custom Vue components for slides
+- `public/` — Static assets (favicon, embedded HTML widgets)
+- `styles/` — Custom CSS
+- `global-bottom.vue` — Global footer component
+- `setup/` — Slidev setup files
+
+### Custom Components
+
+Located in `components/`:
+- `SideBySide.vue` / `SideBox.vue` — Two-column layouts
+- `Card.vue` — Styled content cards
+- `Timeline.vue` / `TimelineItem.vue` — Timeline displays
+- `LayerStack.vue` / `LayerItem.vue` — Stacked layer visuals
+- `StatRow.vue` / `StatItem.vue` / `MetricDisplay.vue` — Statistics and metrics
+- `PathCompare.vue` / `PathItem.vue` — Path comparison layouts
+- `NumberedCards.vue` — Numbered card grids
+
+## Editing Slides (`slides.md`)
+
+### Frontmatter
+
+Configuration at the top of `slides.md`:
+
+```yaml
+---
+theme: default
+title: Agentic AI
+favicon: /favicon.svg
+transition: slide-left
+---
+```
+
+### Slide Separators
+
+- `---` — New slide
+- Slide-specific frontmatter goes between `---` blocks:
 
 ```markdown
-- First point <!-- .element: class="fragment" -->
-- Second point <!-- .element: class="fragment" -->
+---
+class: my-custom-class
+---
 ```
 
-### Slide-Level Attributes
+### Speaker Notes
 
-Add `<!-- .slide: data-background="#ff0000" -->` at the top of a slide to set attributes on the `<section>` element.
+Use HTML comments:
 
-## Changing the Theme
-
-In `main.js`, change the CSS import:
-
-```js
-// Available themes: black, white, league, beige, night, serif, simple, solarized, moon, dracula, sky, blood
-import 'reveal.js/dist/theme/black.css';
+```markdown
+<!--
+Speaker notes go here
+-->
 ```
 
-## Changing the Code Highlight Theme
+### Using Components
 
-In `main.js`, change the highlight CSS import:
+Components are auto-imported:
 
-```js
-// Available: monokai, zenburn, a11y-dark, a11y-light, etc.
-import 'reveal.js/plugin/highlight/monokai.css';
+```markdown
+<SideBySide>
+  <SideBox variant="cream">Left content</SideBox>
+  <SideBox variant="black">Right content</SideBox>
+</SideBySide>
 ```
 
 ## Conventions
 
 - Keep slides concise — one idea per slide
-- Use bullet points, not paragraphs
-- Code examples should be short and focused
-- Use speaker notes for extra context and talking points
-- Use vertical slides (`----`) for sub-topics under a main topic
+- Use custom components for consistent styling
+- Embedded HTML widgets go in `public/` and load via `<iframe>`
+- Static assets (favicon, images) go in `public/`
 
-## Troubleshooting
+## Keyboard Shortcuts
 
-- **Slides not loading**: Make sure `slides.md` is in the `public/` directory
-- **Code not highlighted**: Ensure the language tag is on the code fence (e.g., ` ```python `)
-- **Speaker notes not showing**: Press **S** to open the speaker view
-- **Changes not appearing**: Vite HMR should auto-reload; if not, hard refresh with Cmd+Shift+R
+- **Space** / **Arrow keys** — Navigate slides
+- **O** — Slides overview
+- **D** — Toggle dark mode
+- **F** — Fullscreen

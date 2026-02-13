@@ -2,6 +2,7 @@
 theme: default
 title: Agentic AI
 info: From Concepts To Code
+favicon: /favicon.svg
 class: title-slide
 highlighter: shiki
 drawings:
