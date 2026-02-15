@@ -1,31 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vanta Background</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { width: 100%; height: 100%; overflow: hidden; }
-  #bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+  #bg {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    /* Fallback gradient if Vanta fails to load */
+    background: radial-gradient(ellipse at 50% 50%, #2a1f1a 0%, #0d0a08 60%, #000000 100%);
+  }
 </style>
 </head>
 <body>
 <div id="bg"></div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.halo.min.js"></script>
+<script src="/vendor/three.min.js"></script>
+<script src="/vendor/vanta.halo.min.js"></script>
 <script>
-VANTA.HALO({
-  el: '#bg',
-  mouseControls: true,
-  touchControls: true,
-  gyroControls: false,
-  backgroundColor: 0x000000,
-  baseColor: 0xD4956A,
-  color2: 0xB07850,
-  size: 2,
-  speed: 1,
-  amplitudeFactor: 1.5,
-  scale: 1,
-  scaleMobile: 1,
-});
+if (typeof VANTA !== 'undefined') {
+  VANTA.HALO({
+    el: '#bg',
+    mouseControls: true,
+    touchControls: true,
+    gyroControls: false,
+    backgroundColor: 0x000000,
+    baseColor: 0xD4956A,
+    color2: 0xB07850,
+    size: 2,
+    speed: 1,
+    amplitudeFactor: 1.5,
+    scale: 1,
+    scaleMobile: 1,
+  });
+}
 </script>
 </body>
 </html>

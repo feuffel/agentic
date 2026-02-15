@@ -686,31 +686,33 @@ class: compact-slide
 
 ## Complementary, Not Competitive
 
+Every clash comes from trying to solve everything in one layer.
+
 <LayerStack>
   <LayerItem
     label="Layer 1 — Systems of Record"
-    title="Corporate BT's domain"
+    title="Corporate BT's domain — untouched"
     items="ERP · CRM · Project Controls · Document Management · Finance"
-    desc="Governance, security, compliance, single source of truth"
+    desc="Governance, security, compliance, cross-BU reporting. No changes proposed."
   />
   <LayerItem
     label="Layer 2 — The Application Layer"
-    title="Our opportunity"
+    title="Where the tension resolves"
     items="Field tools · Takeoff automation · Shop-floor interfaces · Contract review"
-    desc="Fit-for-purpose. Fast to build. Fast to iterate. Built by domain experts."
+    desc="Speed, fit, field-readiness — built by the people who do the work. Reads from Layer 1, never replaces it."
     highlight
   />
   <LayerItem
     label="Layer 3 — AI / Agent Infrastructure"
-    title="The engine"
+    title="The bridge"
     items="Claude Code · Cowork · MCP integrations · Custom plugins"
-    desc="Connects Layer 2 to Layer 1. Pulls data. Delivers outcomes."
+    desc="Connects both layers through governed APIs. BT sets the guardrails, we build within them."
     dark
   />
 </LayerStack>
 
 <!--
-This framework shows how agentic tools complement rather than replace enterprise systems.
+This directly addresses the governance vs. speed clash. Layer 1 stays untouched — Corporate BT's domain. Layer 2 is where Industrial builds fit-for-purpose tools. Layer 3 bridges them with BT-approved guardrails.
 -->
 
 ---

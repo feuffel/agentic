@@ -5,14 +5,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Claw'd Walking</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+  @font-face {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(/vendor/fonts/poppins-400.woff2) format('woff2');
+  }
+  @font-face {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url(/vendor/fonts/poppins-500.woff2) format('woff2');
+  }
+  @font-face {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url(/vendor/fonts/poppins-600.woff2) format('woff2');
+  }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { background: #F6F0EB; overflow: hidden; height: 100vh; }
   :root { --s: 20px; }
 
   .clawd-container {
     position: fixed;
-    bottom: calc(50% - 60px);
+    bottom: calc(50% - 134px);
     z-index: 10;
     left: -250px;
   }
@@ -74,7 +94,7 @@
 
   #title {
     position: fixed;
-    bottom: calc(50% + 160px);
+    bottom: calc(50% + 86px);
     left: 50%;
     transform: translateX(-50%);
     font-family: 'Poppins', Arial, sans-serif;

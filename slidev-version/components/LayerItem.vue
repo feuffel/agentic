@@ -20,11 +20,11 @@ defineProps({
 
 <style scoped>
 .layer-item {
-  padding: 1.2em 1.5em;
+  padding: 0.7em 1.2em;
   background: var(--surface-card, rgba(255, 255, 255, 0.05));
   border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.1));
   border-radius: 10px;
-  margin-bottom: 0.75em;
+  margin-bottom: 0.5em;
 }
 
 .layer-item:last-child {
@@ -49,7 +49,7 @@ defineProps({
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--text-muted, rgba(255, 255, 255, 0.5));
-  margin-bottom: 0.5em;
+  margin-bottom: 0.3em;
 }
 
 .layer-highlight .layer-label {
@@ -58,8 +58,8 @@ defineProps({
 
 .layer-title {
   font-weight: 600;
-  font-size: 0.95em;
-  margin-bottom: 0.4em;
+  font-size: 0.9em;
+  margin-bottom: 0.25em;
   color: var(--text-primary, #FFFFFF);
 }
 
@@ -72,6 +72,6 @@ defineProps({
   font-size: 0.68em;
   font-style: italic;
   color: var(--text-muted, rgba(255, 255, 255, 0.5));
-  margin-top: 0.6em;
+  margin-top: 0.35em;
 }
 </style>
