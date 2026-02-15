@@ -2,7 +2,8 @@
 defineProps({
   cols: {
     type: Number,
-    default: 3
+    default: 3,
+    validator: (v) => [1, 2, 3].includes(v)
   }
 })
 </script>

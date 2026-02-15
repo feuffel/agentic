@@ -2,7 +2,8 @@
 defineProps({
   variant: {
     type: String,
-    default: 'glass' // 'glass' or 'black'
+    default: 'glass',
+    validator: (v) => ['glass', 'black'].includes(v)
   }
 })
 </script>

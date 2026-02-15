@@ -441,6 +441,9 @@ function createIconNodes() {
   software.forEach((s, globalIdx) => {
     const el = document.createElement('div');
     el.className = 'icon-node';
+    el.setAttribute('role', 'button');
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('aria-label', s.name + ' (' + s.year + ')');
     const stackIndex = byYear[s.year].indexOf(s);
     el.innerHTML = `<svg viewBox="0 0 24 24">${iconSVGs[s.icon]}</svg>`;
     chartArea.appendChild(el);
@@ -621,12 +624,16 @@ function init() {
   draw();
 
   iconNodes.forEach(n => {
-    n.el.addEventListener('click', () => {
+    function activate() {
       playing = false;
       clearTimeout(timer);
       appTimers.forEach(clearTimeout);
       appTimers.length = 0;
       showLabel(n.data, n);
+    }
+    n.el.addEventListener('click', activate);
+    n.el.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); }
     });
   });
 

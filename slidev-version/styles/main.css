@@ -16,6 +16,16 @@
 
 /* ===== Figma Slides-Inspired Theme ===== */
 /* Dark gradient backgrounds, bold typography, vibrant accents */
+/*
+ * Font stacks:
+ *   Slides:  Inter (display/body) + JetBrains Mono (code/labels)
+ *   Widgets: Space Grotesk (display/body) + Fira Code (data labels)
+ *
+ * The widget fonts (in public/*.html) intentionally differ from the slide
+ * fonts to create visual contrast between "presentation content" and
+ * "embedded data visualizations". Both stacks are bundled locally in
+ * public/vendor/fonts/.
+ */
 
 :root {
   /* Core palette */
