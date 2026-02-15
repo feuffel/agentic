@@ -46,7 +46,7 @@
   --slidev-theme-background: var(--bg-gradient-mid);
 }
 
-/* Base slide styling */
+/* Base slide styling — !important needed to override Slidev theme defaults */
 .slidev-layout {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
   background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-mid) 50%, var(--bg-gradient-end) 100%) !important;
@@ -58,125 +58,134 @@
   padding: 7% !important;
 }
 
-/* Typography hierarchy */
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
-  text-transform: none !important;
+/* Typography hierarchy — scoped under .slidev-layout for specificity */
+.slidev-layout h1,
+.slidev-layout h2,
+.slidev-layout h3,
+.slidev-layout h4,
+.slidev-layout h5,
+.slidev-layout h6 {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  text-transform: none;
   color: var(--text-primary);
   letter-spacing: -0.03em;
 }
 
-h1 {
-  font-weight: 800 !important;
-  font-size: 3em !important;
-  line-height: 1 !important;
-  margin-bottom: 0.4em !important;
+.slidev-layout h1 {
+  font-weight: 800;
+  font-size: 3em;
+  line-height: 1;
+  margin-bottom: 0.4em;
 }
 
-h2 {
-  font-weight: 700 !important;
-  font-size: 2em !important;
-  line-height: 1 !important;
-  margin-bottom: 0.4em !important;
+.slidev-layout h2 {
+  font-weight: 700;
+  font-size: 2em;
+  line-height: 1;
+  margin-bottom: 0.4em;
 }
 
-h3 {
-  font-weight: 600 !important;
-  font-size: 1.3em !important;
-  margin-bottom: 0.5em !important;
-  color: var(--text-secondary) !important;
+.slidev-layout h3 {
+  font-weight: 600;
+  font-size: 1.3em;
+  margin-bottom: 0.5em;
+  color: var(--text-secondary);
 }
 
 /* Paragraph and list text */
-p, li {
+.slidev-layout p,
+.slidev-layout li {
   color: var(--text-secondary);
   line-height: 1.6;
 }
 
-strong {
+.slidev-layout strong {
   color: var(--text-primary);
   font-weight: 600;
 }
 
-em {
+.slidev-layout em {
   color: var(--accent-cyan);
 }
 
 /* Code styling */
-code, pre, .slidev-code {
-  font-family: 'JetBrains Mono', monospace !important;
+.slidev-layout code,
+.slidev-layout pre,
+.slidev-layout .slidev-code {
+  font-family: 'JetBrains Mono', monospace;
 }
 
-pre {
-  border-radius: 12px !important;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3) !important;
-  background: rgba(0, 0, 0, 0.4) !important;
-  border: 1px solid var(--border-subtle) !important;
+.slidev-layout pre {
+  border-radius: 12px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border-subtle);
 }
 
-code:not(pre code) {
-  background: var(--surface-card) !important;
-  padding: 0.15em 0.4em !important;
-  border-radius: 4px !important;
-  color: var(--accent-cyan) !important;
+.slidev-layout code:not(pre code) {
+  background: var(--surface-card);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  color: var(--accent-cyan);
 }
 
 /* Blockquotes — dramatic with accent border */
-blockquote {
-  background: transparent !important;
-  border: none !important;
-  border-left: 3px solid var(--accent-pink) !important;
-  box-shadow: none !important;
-  padding: 0 0 0 1em !important;
-  margin: 1em 0 !important;
-  font-weight: 500 !important;
-  font-size: 1.2em !important;
-  font-style: italic !important;
+.slidev-layout blockquote {
+  background: transparent;
+  border: none;
+  border-left: 3px solid var(--accent-pink);
+  box-shadow: none;
+  padding: 0 0 0 1em;
+  margin: 1em 0;
+  font-weight: 500;
+  font-size: 1.2em;
+  font-style: italic;
   width: 100%;
-  color: var(--text-secondary) !important;
+  color: var(--text-secondary);
 }
 
-blockquote p {
-  font-weight: 500 !important;
-  font-style: italic !important;
-  color: var(--text-secondary) !important;
+.slidev-layout blockquote p {
+  font-weight: 500;
+  font-style: italic;
+  color: var(--text-secondary);
 }
 
 /* Links */
-a {
-  color: var(--accent-cyan) !important;
-  text-decoration: none !important;
+.slidev-layout a {
+  color: var(--accent-cyan);
+  text-decoration: none;
   border-bottom: 1px solid transparent;
   transition: border-color 0.2s ease;
 }
 
-a:hover {
-  border-bottom-color: var(--accent-cyan) !important;
+.slidev-layout a:hover {
+  border-bottom-color: var(--accent-cyan);
 }
 
 /* Horizontal dividers — gradient */
-hr {
-  border: none !important;
-  height: 1px !important;
-  background: linear-gradient(90deg, transparent, var(--accent-pink), var(--accent-purple), var(--accent-cyan), transparent) !important;
-  margin: 1.8em 0 !important;
-  opacity: 0.5 !important;
+.slidev-layout hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent-pink), var(--accent-purple), var(--accent-cyan), transparent);
+  margin: 1.8em 0;
+  opacity: 0.5;
 }
 
 /* Tables */
-table {
+.slidev-layout table {
   border-collapse: collapse;
   width: 100%;
 }
 
-th, td {
+.slidev-layout th,
+.slidev-layout td {
   border: 1px solid var(--border-subtle);
   padding: 0.6em 0.85em;
   background: transparent;
   color: var(--text-secondary);
 }
 
-thead th {
+.slidev-layout thead th {
   font-family: 'JetBrains Mono', monospace;
   text-transform: uppercase;
   letter-spacing: 0.15em;
@@ -188,46 +197,45 @@ thead th {
 }
 
 /* ===== Dark Slide Variant (extra dark) ===== */
-.dark-slide,
 .slidev-layout.dark-slide {
   background: var(--bg-dark) !important;
 }
 
 /* ===== Statement Slide (big impactful text) ===== */
-.statement-slide {
+.slidev-layout.statement-slide {
   display: flex;
   flex-direction: column;
   justify-content: center;
   background: var(--bg-dark) !important;
 }
 
-.statement-slide h2 {
-  font-size: 2.2em !important;
-  margin-bottom: 0.5em !important;
+.slidev-layout.statement-slide h2 {
+  font-size: 2.2em;
+  margin-bottom: 0.5em;
 }
 
-.statement-slide h3 {
-  font-size: 1.6em !important;
-  color: var(--accent-cyan) !important;
+.slidev-layout.statement-slide h3 {
+  font-size: 1.6em;
+  color: var(--accent-cyan);
 }
 
-.statement-slide p {
+.slidev-layout.statement-slide p {
   font-size: 1.1em;
   max-width: 85%;
   line-height: 1.6;
 }
 
 /* ===== Compact Slide Variants ===== */
-.compact-slide {
+.slidev-layout.compact-slide {
   font-size: 0.85em;
 }
 
-.compact-slide h2 {
-  font-size: 1.6em !important;
+.slidev-layout.compact-slide h2 {
+  font-size: 1.6em;
 }
 
-.compact-slide h3 {
-  font-size: 1.15em !important;
+.slidev-layout.compact-slide h3 {
+  font-size: 1.15em;
 }
 
 /* ===== Centered Layout Override ===== */
@@ -245,18 +253,18 @@ thead th {
   text-align: center;
 }
 
-/* Center layout with dark bg */
+/* Center layout with dark bg — !important needed to override gradient */
 [background="black"] .slidev-layout,
 .slidev-page[style*="background: black"] .slidev-layout {
   background: var(--bg-dark) !important;
 }
 
 /* ===== Quote Slide ===== */
-.quote-slide {
+.slidev-layout.quote-slide {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  text-align: left !important;
+  text-align: left;
   background: var(--bg-dark) !important;
 }
 
@@ -320,13 +328,13 @@ thead th {
   animation: text-lights 2.5s ease-in-out infinite;
 }
 
-/* ===== Iframe slides — full bleed ===== */
+/* ===== Iframe slides — full bleed — !important to override padding ===== */
 .slidev-layout.iframe {
   padding: 0 !important;
 }
 
-iframe {
-  border: none !important;
+.slidev-layout iframe {
+  border: none;
 }
 
 /* ===== Title Slide with Vanta Background ===== */
@@ -340,6 +348,6 @@ iframe {
 }
 
 /* ===== Side-by-Side Slide ===== */
-.side-by-side-slide {
+.slidev-layout.side-by-side-slide {
   padding: 0 !important;
 }

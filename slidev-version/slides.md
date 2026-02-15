@@ -28,14 +28,14 @@ class: side-by-side-slide
 ---
 
 <SideBySide>
-  <SideBox variant="cream">
-    <p class="text-2xl font-light leading-relaxed">This isn't a correction. This is an industry being repriced.</p>
-    <p class="text-sm text-gray-600 mt-4">February 3–4, 2026</p>
+  <SideBox variant="glass">
+    <p>This isn't a correction. This is an industry being repriced.</p>
+    <p class="side-caption">February 3–4, 2026</p>
   </SideBox>
   <SideBox variant="black">
-    <span class="text-xs text-gray-500 uppercase tracking-wider">Wiped from global software stocks</span>
-    <span class="text-7xl font-bold block my-2">$285B</span>
-    <p class="text-gray-500">In just 48 hours.</p>
+    <span class="side-label">Wiped from global software stocks</span>
+    <span class="side-stat">$285B</span>
+    <p class="side-subtitle">In just 48 hours.</p>
   </SideBox>
 </SideBySide>
 

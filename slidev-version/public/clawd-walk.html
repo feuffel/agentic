@@ -299,6 +299,9 @@ function replay() {
 
 // Random blinking with variability
 const eyes = document.querySelectorAll('.blink-wrap');
+let blinkTimer = null;
+let isVisible = false;
+
 function singleBlink(duration) {
   return new Promise(resolve => {
     eyes.forEach(e => e.classList.add('blinked'));
@@ -309,25 +312,40 @@ function singleBlink(duration) {
   });
 }
 async function doBlink() {
+  if (!isVisible) { blinkTimer = null; return; }
   const roll = Math.random();
   if (roll < 0.15) {
-    // Quick double blink
     await singleBlink(80);
     await new Promise(r => setTimeout(r, 150));
     await singleBlink(80);
   } else if (roll < 0.3) {
-    // Long slow blink
     await singleBlink(250);
   } else if (roll < 0.45) {
-    // Quick blink
     await singleBlink(60);
   } else {
-    // Normal blink
     await singleBlink(120);
   }
-  setTimeout(doBlink, 1000 + Math.random() * 5000);
+  if (isVisible) {
+    blinkTimer = setTimeout(doBlink, 1000 + Math.random() * 5000);
+  } else {
+    blinkTimer = null;
+  }
 }
-setTimeout(doBlink, 800 + Math.random() * 1500);
+
+// Pause blink loop when iframe is off-screen
+const visObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !isVisible) {
+      isVisible = true;
+      if (!blinkTimer) blinkTimer = setTimeout(doBlink, 800 + Math.random() * 1500);
+    } else if (!entry.isIntersecting && isVisible) {
+      isVisible = false;
+      clearTimeout(blinkTimer);
+      blinkTimer = null;
+    }
+  });
+}, { threshold: 0.1 });
+visObserver.observe(document.body);
 
 runSequence();
 

@@ -2,7 +2,7 @@
 defineProps({
   variant: {
     type: String,
-    default: 'cream' // 'cream' or 'black'
+    default: 'glass' // 'glass' or 'black'
   }
 })
 </script>
@@ -21,7 +21,7 @@ defineProps({
   border-radius: 12px;
 }
 
-.side-cream {
+.side-glass {
   background: var(--surface-card, rgba(255, 255, 255, 0.05));
   border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.1));
   color: var(--text-primary, #FFFFFF);
@@ -36,8 +36,8 @@ defineProps({
   text-align: center;
 }
 
-/* Typography inside cream box */
-.side-cream :deep(p) {
+/* Typography inside glass box */
+.side-glass :deep(p) {
   font-size: 1.15em;
   font-weight: 400;
   line-height: 1.5;
@@ -45,7 +45,7 @@ defineProps({
   color: var(--text-secondary, rgba(255, 255, 255, 0.7));
 }
 
-.side-cream :deep(.text-sm) {
+.side-glass :deep(.side-caption) {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.5em;
   font-weight: 500;
@@ -56,7 +56,7 @@ defineProps({
 }
 
 /* Typography inside black box */
-.side-black :deep(.text-xs) {
+.side-black :deep(.side-label) {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.55em;
   font-weight: 600;
@@ -66,7 +66,7 @@ defineProps({
   margin-bottom: 0.8em;
 }
 
-.side-black :deep(.text-7xl) {
+.side-black :deep(.side-stat) {
   font-family: 'Inter', sans-serif;
   font-size: 5.5em;
   font-weight: 800;
@@ -79,7 +79,7 @@ defineProps({
   margin: 0.15em 0 0.25em 0;
 }
 
-.side-black :deep(.text-gray-500) {
+.side-black :deep(.side-subtitle) {
   font-family: 'Inter', sans-serif;
   font-size: 1.4em;
   font-weight: 400;

@@ -257,17 +257,31 @@ data.forEach((d, i) => {
   const row = document.createElement("div");
   row.className = "row";
 
-  row.innerHTML = `
-    <div class="value">–$${d.value.toFixed(1)}b</div>
-    <div class="bar-track">
-      <div class="bar" data-width="${pct}"></div>
-    </div>
-    <div class="label">
-      <span class="company-name">${d.company}</span>
-      <span class="ticker">${d.ticker}</span>
-    </div>
-  `;
+  const valueEl = document.createElement("div");
+  valueEl.className = "value";
+  valueEl.textContent = `–$${d.value.toFixed(1)}b`;
 
+  const barTrack = document.createElement("div");
+  barTrack.className = "bar-track";
+  const bar = document.createElement("div");
+  bar.className = "bar";
+  bar.dataset.width = pct;
+  barTrack.appendChild(bar);
+
+  const label = document.createElement("div");
+  label.className = "label";
+  const name = document.createElement("span");
+  name.className = "company-name";
+  name.textContent = d.company;
+  const ticker = document.createElement("span");
+  ticker.className = "ticker";
+  ticker.textContent = d.ticker;
+  label.appendChild(name);
+  label.appendChild(ticker);
+
+  row.appendChild(valueEl);
+  row.appendChild(barTrack);
+  row.appendChild(label);
   container.appendChild(row);
   rows.push(row);
 });

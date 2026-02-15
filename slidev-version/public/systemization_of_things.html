@@ -630,23 +630,22 @@ function init() {
     });
   });
 
-  // Start animation only when visible (handles Slidev iframe preloading)
+  // Start animation when visible; replay when returning to this slide
+  let hasPlayed = false;
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting && revealIndex < 0 && !playing) {
-        setTimeout(playSequence, 400);
+      if (entry.isIntersecting && !playing) {
+        if (!hasPlayed) {
+          hasPlayed = true;
+          setTimeout(playSequence, 400);
+        } else {
+          resetAnimation();
+          setTimeout(playSequence, 400);
+        }
       }
     });
   }, { threshold: 0.5 });
   observer.observe(document.body);
-
-  // Also handle re-navigation: replay when page becomes visible again
-  document.addEventListener('visibilitychange', () => {
-    if (!document.hidden) {
-      resetAnimation();
-      setTimeout(playSequence, 400);
-    }
-  });
 }
 
 window.addEventListener('resize', () => {
