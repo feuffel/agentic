@@ -3,12 +3,12 @@ theme: default
 title: Agentic AI
 info: From Concepts To Code
 favicon: /favicon.svg
-class: title-slide
 highlighter: shiki
 drawings:
   persist: false
 transition: slide-left
 mdc: true
+class: title-slide
 ---
 
 <div class="absolute inset-0 -z-10">
@@ -22,6 +22,29 @@ mdc: true
 <!--
 Welcome to this presentation on Agentic AI. We'll explore what makes AI systems truly autonomous, how they're built, and where the field is headed.
 -->
+
+---
+
+<div class="flex items-center justify-center h-full">
+  <div class="chicken-sprite" />
+</div>
+
+<SlideAudio src="/chicken_audio.m4a" :slide="2" />
+
+<style>
+.chicken-sprite {
+  width: 128px;
+  height: 128px;
+  background: url('/chicken_eating_left.png') left center;
+  background-size: 1024px 128px;
+  image-rendering: pixelated;
+  animation: chicken-eat 0.8s steps(8) infinite;
+}
+@keyframes chicken-eat {
+  from { background-position: 0 center; }
+  to { background-position: -1024px center; }
+}
+</style>
 
 ---
 class: side-by-side-slide
