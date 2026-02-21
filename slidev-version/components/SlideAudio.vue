@@ -1,50 +1,84 @@
 <script setup>
-import { ref, watch, onMounted, onUnmounted } from 'vue'
+import { watch, onMounted, onUnmounted } from 'vue'
 import { useNav } from '@slidev/client'
 
 const props = defineProps({
   src: { type: String, required: true },
-  type: { type: String, default: 'audio/mp4' },
   slide: { type: Number, required: true },
 })
 
 const { currentPage } = useNav()
-const audioRef = ref(null)
 
-function tryPlay() {
-  const el = audioRef.value
-  if (!el) return
-  el.currentTime = 0
-  el.play().catch(() => {})
+// Use Audio constructor — no DOM element needed, avoids template rendering issues
+let audio = null
+let pendingPlay = false
+
+function ensureAudio() {
+  if (!audio) {
+    audio = new Audio(props.src)
+    audio.preload = 'auto'
+  }
+  return audio
 }
 
-function pause() {
-  const el = audioRef.value
-  if (!el) return
-  el.pause()
+function tryPlay() {
+  const el = ensureAudio()
+  el.currentTime = 0
+  const p = el.play()
+  if (p && p.catch) {
+    p.catch((err) => {
+      if (err.name === 'NotAllowedError') {
+        console.warn('[SlideAudio] Autoplay blocked on slide', props.slide, '— will retry on next interaction')
+        pendingPlay = true
+      } else {
+        console.error('[SlideAudio] Playback error:', err)
+      }
+    })
+  }
+}
+
+function stop() {
+  if (!audio) return
+  audio.pause()
+  audio.currentTime = 0
+}
+
+function onInteraction() {
+  if (pendingPlay && currentPage.value === props.slide) {
+    pendingPlay = false
+    tryPlay()
+  }
 }
 
 watch(currentPage, (page) => {
   if (page === props.slide) {
     tryPlay()
   } else {
-    pause()
+    stop()
   }
 })
 
 onMounted(() => {
+  ensureAudio()
+  document.addEventListener('click', onInteraction)
+  document.addEventListener('keydown', onInteraction)
   if (currentPage.value === props.slide) {
     tryPlay()
   }
 })
 
 onUnmounted(() => {
-  pause()
+  document.removeEventListener('click', onInteraction)
+  document.removeEventListener('keydown', onInteraction)
+  if (audio) {
+    audio.pause()
+    audio.src = ''
+    audio = null
+  }
+  pendingPlay = false
 })
 </script>
 
 <template>
-  <audio ref="audioRef">
-    <source :src="src" :type="type" />
-  </audio>
+  <span style="display:none" />
 </template>
