@@ -418,6 +418,22 @@ class: text-center
 background: black
 ---
 
+<div class="text-4xl leading-relaxed max-w-5xl mx-auto px-8">
+"Enterprise environments are characterized by <strong>intricate data structures</strong>, <strong>bespoke rules</strong>, and <strong>nuanced operational procedures</strong> — and generic, pre-built solutions often fall short."
+
+<p class="mt-8 text-xl opacity-60">— Nate B. Jones</p>
+</div>
+
+<!--
+This quote reinforces the core argument: enterprise complexity demands purpose-built tools, not one-size-fits-all platforms.
+-->
+
+---
+layout: center
+class: text-center
+background: black
+---
+
 <MetricDisplay
   label="The Utilization Gap"
   value="[X] → [X]"
